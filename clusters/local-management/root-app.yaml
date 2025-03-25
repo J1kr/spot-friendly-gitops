@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/your-username/spot-friendly-gitops
+    repoURL: https://github.com/J1kr/spot-friendly-gitops
     targetRevision: HEAD
     path: apps
   destination:
