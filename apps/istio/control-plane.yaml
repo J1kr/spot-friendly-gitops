@@ -3,6 +3,7 @@ kind: Application
 metadata:
   name: istiod
   namespace: argocd
+  argocd.argoproj.io/sync-wave: "1"    
 spec:
   project: default
   source:
@@ -28,5 +29,4 @@ spec:
     syncOptions:
       - CreateNamespace=true
       - ServerSideApply=true      
-  dependsOn:
-    - istio-base
+
