@@ -13,6 +13,8 @@ spec:
       parameters:
         - name: name
           value: istio-ingressgateway
+        - name: image.tag
+          value: 1.25.0          
         - name: service.type
           value: NodePort
   destination:
