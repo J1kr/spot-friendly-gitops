@@ -27,6 +27,16 @@ spec:
             protocol: TCP
             targetPort: 443
             nodePort: 30443
+        deployment:
+          podAnnotations:
+            sidecar.istio.io/inject: "true"
+          containerPorts:
+            - name: http2
+              containerPort: 80
+              protocol: TCP
+            - name: https
+              containerPort: 443
+              protocol: TCP            
   destination:
     server: https://kubernetes.default.svc
     namespace: istio-system
