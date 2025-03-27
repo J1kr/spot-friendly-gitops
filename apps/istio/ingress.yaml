@@ -19,6 +19,22 @@ spec:
           value: 1.25.0          
         - name: service.type
           value: NodePort
+        - name: service.ports[0].name
+          value: http2
+        - name: service.ports[0].port
+          value: 80
+        - name: service.ports[0].targetPort
+          value: 80
+        - name: service.ports[0].nodePort
+          value: 30080
+        - name: service.ports[1].name
+          value: https
+        - name: service.ports[1].port
+          value: 443
+        - name: service.ports[1].targetPort
+          value: 443
+        - name: service.ports[1].nodePort
+          value: 30443
   destination:
     server: https://kubernetes.default.svc
     namespace: istio-system
