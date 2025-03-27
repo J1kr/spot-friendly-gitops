@@ -1,0 +1,10 @@
+resources:
+  - istio.yaml
+
+helmCharts:
+  - name: podinfo
+    repo: https://stefanprodan.github.io/podinfo
+    version: 6.4.0
+    releaseName: podinfo
+    namespace: podinfo
+    valuesFile: helm-values.yaml
