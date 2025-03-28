@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: thanos-receive
+  name: thanos
   namespace: argocd
 spec:
   project: default
@@ -13,7 +13,6 @@ spec:
     chart: thanos
     targetRevision: 15.13.2
     helm:
-      skipCrds: true
       values: |-
         objstoreConfig:
           existingSecret:
@@ -47,7 +46,6 @@ spec:
 
         metrics:
           enabled: true
-
   syncPolicy:
     automated:
       prune: true
