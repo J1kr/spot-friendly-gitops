@@ -13,8 +13,58 @@ spec:
     chart: kube-prometheus-stack
     targetRevision: 70.3.0
     helm:
-      valueFiles:
-        - ./values.yaml
+      values: |-
+        fullnameOverride: prometheus
+
+        alertmanager:
+          enabled: true
+          alertmanagerSpec:
+            replicas: 1
+            retention: 6h
+            storage:
+              volumeClaimTemplate:
+                spec:
+                  storageClassName: local-path
+                  accessModes: ["ReadWriteOnce"]
+                  resources:
+                    requests:
+                      storage: 1Gi
+          service:
+            type: ClusterIP
+
+        prometheus:
+          prometheusSpec:
+            retention: 6h
+            walCompression: true
+            enableAdminAPI: true
+            remoteWrite:
+              - url: "http://thanos-receive.monitoring.svc.cluster.local:19291/api/v1/receive"
+            storageSpec:
+              volumeClaimTemplate:
+                spec:
+                  storageClassName: local-path
+                  accessModes: ["ReadWriteOnce"]
+                  resources:
+                    requests:
+                      storage: 5Gi
+          service:
+            type: ClusterIP
+            port: 9090
+            annotations:
+              prometheus.io/scrape: "true"
+
+        grafana:
+          enabled: true
+          service:
+            type: ClusterIP
+            port: 80
+          ingress:
+            enabled: false
+          sidecar:
+            dashboards:
+              enabled: true
+            datasources:
+              enabled: true
       skipCrds: true   
   syncPolicy:
     automated:
