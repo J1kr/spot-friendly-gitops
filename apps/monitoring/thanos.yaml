@@ -15,6 +15,11 @@ spec:
     helm:
       skipCrds: true
       values: |-
+        # Chart-level objstoreConfig (chart 내부 validation 통과용)
+        objstoreConfig:
+          type: S3
+          configFile: /conf/objstore.yml
+
         receive:
           enabled: true
           replicaCount: 1
@@ -22,6 +27,10 @@ spec:
           persistence:
             enabled: false
 
+          objstoreConfig:
+            type: S3
+            configFile: /conf/objstore.yml
+
           extraVolumes:
             - name: objstore-secret
               secret:
@@ -31,10 +40,6 @@ spec:
             - name: objstore-secret
               mountPath: /conf
               readOnly: true
-
-          objstoreConfig:
-            type: S3
-            configFile: /conf/objstore.yml
 
         storegateway:
           enabled: true
@@ -42,6 +47,10 @@ spec:
           persistence:
             enabled: false
 
+          objstoreConfig:
+            type: S3
+            configFile: /conf/objstore.yml
+
           extraVolumes:
             - name: objstore-secret
               secret:
@@ -51,10 +60,6 @@ spec:
             - name: objstore-secret
               mountPath: /conf
               readOnly: true
-
-          objstoreConfig:
-            type: S3
-            configFile: /conf/objstore.yml
 
         query:
           enabled: true
