@@ -11,8 +11,9 @@ spec:
   source:
     repoURL: https://charts.bitnami.com/bitnami
     chart: thanos
-    targetRevision: 15.12.4
+    targetRevision: 15.13.2
     helm:
+      skipCrds: true
       values: |-
         objstoreConfig:
           existingSecret:
@@ -36,8 +37,8 @@ spec:
           enabled: true
           replicaCount: 1
           stores:
-            - dnssrv+_grpc._tcp.thanos-storegateway.monitoring.svc.cluster.local
             - dnssrv+_grpc._tcp.thanos-receive.monitoring.svc.cluster.local
+            - dnssrv+_grpc._tcp.thanos-storegateway.monitoring.svc.cluster.local
           service:
             type: ClusterIP
             ports:
