@@ -62,9 +62,6 @@ spec:
         query:
           enabled: true
           replicaCount: 1
-          stores:
-            - dnssrv+_grpc._tcp.thanos-receive.monitoring.svc.cluster.local
-            - dnssrv+_grpc._tcp.thanos-storegateway.monitoring.svc.cluster.local
           service:
             type: ClusterIP
             ports:
