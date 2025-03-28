@@ -1,83 +1,83 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: thanos
-  namespace: argocd
-spec:
-  project: default
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: monitoring
-  source:
-    repoURL: https://charts.bitnami.com/bitnami
-    chart: thanos
-    targetRevision: 15.5.1
-    helm:
-      skipCrds: true
-      values: |-
-        # Chart-level objstoreConfig (chart 내부 validation 통과용)
-        objstoreConfig:
-          type: S3
-          configFile: /conf/objstore.yml
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: thanos
+#   namespace: argocd
+# spec:
+#   project: default
+#   destination:
+#     server: https://kubernetes.default.svc
+#     namespace: monitoring
+#   source:
+#     repoURL: https://charts.bitnami.com/bitnami
+#     chart: thanos
+#     targetRevision: 15.5.1
+#     helm:
+#       skipCrds: true
+#       values: |-
+#         # Chart-level objstoreConfig (chart 내부 validation 통과용)
+#         objstoreConfig:
+#           type: S3
+#           configFile: /conf/objstore.yml
 
-        receive:
-          enabled: true
-          replicaCount: 1
-          tsdbRetention: 6h
-          persistence:
-            enabled: false
+#         receive:
+#           enabled: true
+#           replicaCount: 1
+#           tsdbRetention: 6h
+#           persistence:
+#             enabled: false
 
-          objstoreConfig:
-            type: S3
-            configFile: /conf/objstore.yml
+#           objstoreConfig:
+#             type: S3
+#             configFile: /conf/objstore.yml
 
-          extraVolumes:
-            - name: objstore-secret
-              secret:
-                secretName: thanos-objstore-secret
+#           extraVolumes:
+#             - name: objstore-secret
+#               secret:
+#                 secretName: thanos-objstore-secret
 
-          extraVolumeMounts:
-            - name: objstore-secret
-              mountPath: /conf
-              readOnly: true
+#           extraVolumeMounts:
+#             - name: objstore-secret
+#               mountPath: /conf
+#               readOnly: true
 
-        storegateway:
-          enabled: true
-          replicaCount: 1
-          persistence:
-            enabled: false
+#         storegateway:
+#           enabled: true
+#           replicaCount: 1
+#           persistence:
+#             enabled: false
 
-          objstoreConfig:
-            type: S3
-            configFile: /conf/objstore.yml
+#           objstoreConfig:
+#             type: S3
+#             configFile: /conf/objstore.yml
 
-          extraVolumes:
-            - name: objstore-secret
-              secret:
-                secretName: thanos-objstore-secret
+#           extraVolumes:
+#             - name: objstore-secret
+#               secret:
+#                 secretName: thanos-objstore-secret
 
-          extraVolumeMounts:
-            - name: objstore-secret
-              mountPath: /conf
-              readOnly: true
+#           extraVolumeMounts:
+#             - name: objstore-secret
+#               mountPath: /conf
+#               readOnly: true
 
-        query:
-          enabled: true
-          replicaCount: 1
-          stores:
-            - dnssrv+_grpc._tcp.thanos-receive.monitoring.svc.cluster.local
-            - dnssrv+_grpc._tcp.thanos-storegateway.monitoring.svc.cluster.local
-          service:
-            type: ClusterIP
-            ports:
-              http: 9090
-              grpc: 10901
+#         query:
+#           enabled: true
+#           replicaCount: 1
+#           stores:
+#             - dnssrv+_grpc._tcp.thanos-receive.monitoring.svc.cluster.local
+#             - dnssrv+_grpc._tcp.thanos-storegateway.monitoring.svc.cluster.local
+#           service:
+#             type: ClusterIP
+#             ports:
+#               http: 9090
+#               grpc: 10901
 
-        metrics:
-          enabled: true
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
+#         metrics:
+#           enabled: true
+#   syncPolicy:
+#     automated:
+#       prune: true
+#       selfHeal: true
+#     syncOptions:
+#       - CreateNamespace=true
