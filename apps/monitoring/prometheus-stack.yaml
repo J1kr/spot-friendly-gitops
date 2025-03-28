@@ -16,7 +16,6 @@ spec:
       valueFiles:
         - values.yaml
       skipCrds: true   
-    path: apps/monitoring
   syncPolicy:
     automated:
       prune: true

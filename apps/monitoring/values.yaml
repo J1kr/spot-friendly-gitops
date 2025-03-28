@@ -4,7 +4,7 @@ alertmanager:
   enabled: true
   alertmanagerSpec:
     replicas: 1
-    retention: 120h
+    retention: 6h
     storage:
       volumeClaimTemplate:
         spec:
