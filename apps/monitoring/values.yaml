@@ -1,5 +1,21 @@
 fullnameOverride: prometheus
 
+alertmanager:
+  enabled: true
+  alertmanagerSpec:
+    replicas: 1
+    retention: 120h
+    storage:
+      volumeClaimTemplate:
+        spec:
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 1Gi
+
+  service:
+    type: ClusterIP
+
 prometheus:
   prometheusSpec:
     retention: 6h  # flush 테스트를 위한 짧은 리텐션 설정 (테스트 후 늘릴 수 있음)
