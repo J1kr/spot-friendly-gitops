@@ -15,11 +15,6 @@ spec:
     helm:
       skipCrds: true
       values: |-
-        objstoreConfig:
-          existingSecret:
-            name: thanos-objstore-secret
-            key: objstore.yml
-
         receive:
           enabled: true
           replicaCount: 1
@@ -27,11 +22,39 @@ spec:
           persistence:
             enabled: false
 
+          extraVolumes:
+            - name: objstore-secret
+              secret:
+                secretName: thanos-objstore-secret
+
+          extraVolumeMounts:
+            - name: objstore-secret
+              mountPath: /conf
+              readOnly: true
+
+          objstoreConfig:
+            type: S3
+            configFile: /conf/objstore.yml
+
         storegateway:
           enabled: true
           replicaCount: 1
           persistence:
             enabled: false
+
+          extraVolumes:
+            - name: objstore-secret
+              secret:
+                secretName: thanos-objstore-secret
+
+          extraVolumeMounts:
+            - name: objstore-secret
+              mountPath: /conf
+              readOnly: true
+
+          objstoreConfig:
+            type: S3
+            configFile: /conf/objstore.yml
 
         query:
           enabled: true
