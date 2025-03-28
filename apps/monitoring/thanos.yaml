@@ -11,7 +11,7 @@ spec:
   source:
     repoURL: https://charts.bitnami.com/bitnami
     chart: thanos
-    targetRevision: 15.13.0
+    targetRevision: 15.12.4
     helm:
       values: |-
         objstoreConfig:
