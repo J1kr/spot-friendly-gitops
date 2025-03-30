@@ -35,14 +35,6 @@ spec:
 
         query:
           enabled: true
-          stores:
-            - dnssrv+_grpc._tcp.thanos-receive.monitoring.svc.cluster.local
-            - dnssrv+_grpc._tcp.thanos-storegateway.monitoring.svc.cluster.local
-          service:
-            type: ClusterIP
-            ports:
-              http: 9090
-              grpc: 10901
 
         metrics:
           enabled: true
