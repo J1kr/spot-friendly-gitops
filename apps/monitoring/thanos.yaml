@@ -1,0 +1,54 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: thanos
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: monitoring
+  source:
+    repoURL: https://charts.bitnami.com/bitnami
+    chart: thanos
+    targetRevision: 15.5.1
+    helm:
+      skipCrds: true
+      values: |
+        existingObjstoreSecret: thanos-objstore-secret
+
+        receive:
+          enabled: true
+          tsdbRetention: 6h
+          persistence:
+            enabled: false
+          resources:
+            requests:
+              memory: 1Gi
+            limits:
+              memory: 1Gi
+
+        storegateway:
+          enabled: true
+          persistence:
+            enabled: false
+
+        query:
+          enabled: true
+          stores:
+            - dnssrv+_grpc._tcp.thanos-receive.monitoring.svc.cluster.local
+            - dnssrv+_grpc._tcp.thanos-storegateway.monitoring.svc.cluster.local
+          service:
+            type: ClusterIP
+            ports:
+              http: 9090
+              grpc: 10901
+
+        metrics:
+          enabled: true
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
