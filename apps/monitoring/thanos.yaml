@@ -24,9 +24,9 @@ spec:
             enabled: false
           resources:
             requests:
-              memory: 1Gi
+              memory: 512Mib
             limits:
-              memory: 1Gi
+              memory: 512Mib
 
         storegateway:
           enabled: true
