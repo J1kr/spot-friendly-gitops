@@ -46,9 +46,13 @@ spec:
             size: 5Gi
           extraArgs:
             - --delete-delay=24h
-            
+
         metrics:
           enabled: true
+          serviceMonitor:
+            enabled: true
+            labels:
+              release: prometheus-stack
   syncPolicy:
     automated:
       prune: true
