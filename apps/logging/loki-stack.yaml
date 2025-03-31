@@ -21,7 +21,9 @@ spec:
           persistence:
             enabled: true
             size: 5Gi
-            storageClassName: ""  # 필요시 gp2, standard 등 명시
+            storageClassName: local-path
+            accessModes:
+              - ReadWriteOnce
 
           storage:
             type: "s3"
