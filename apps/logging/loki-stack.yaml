@@ -1,0 +1,74 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: loki
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: logging
+  source:
+    repoURL: https://grafana.github.io/helm-charts
+    chart: loki-stack
+    targetRevision: 2.10.2
+    helm:
+      skipCrds: true
+      values: |
+        loki:
+          enabled: true
+
+          persistence:
+            enabled: true
+            size: 5Gi
+            storageClassName: ""  # 필요시 gp2, standard 등 명시
+
+          storage:
+            type: "s3"
+
+          config:
+            schema_config:
+              configs:
+                - from: 2024-01-01
+                  store: boltdb-shipper
+                  object_store: s3
+                  schema: v11
+                  index:
+                    prefix: index_
+                    period: 24h
+
+            storage_config:
+              boltdb_shipper:
+                active_index_directory: /var/loki/index
+                cache_location: /var/loki/cache
+                shared_store: s3
+              aws:
+                bucketnames: j1-lab-loki
+                endpoint: s3.ap-northeast-2.amazonaws.com
+                region: ap-northeast-2
+                insecure: false
+                s3forcepathstyle: true
+
+          extraEnvFrom:
+            - secretRef:
+                name: loki-s3-secret
+
+        promtail:
+          enabled: true
+          config:
+            clients:
+              - url: http://loki.logging.svc.cluster.local:3100/loki/api/v1/push
+
+        grafana:
+          enabled: false
+
+        serviceMonitor:
+          enabled: true
+          additionalLabels:
+            release: prometheus-stack
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
