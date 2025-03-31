@@ -13,7 +13,8 @@ spec:
     matchNames:
       - argocd
   endpoints:
-    - port: metrics
+    - port: http
+      path: /metrics
       interval: 30s
 ---
 apiVersion: monitoring.coreos.com/v1
@@ -31,7 +32,8 @@ spec:
     matchNames:
       - argocd
   endpoints:
-    - port: metrics
+    - port: tcp-repo-server
+      path: /metrics
       interval: 30s
 ---
 apiVersion: monitoring.coreos.com/v1
@@ -50,4 +52,5 @@ spec:
       - argocd
   endpoints:
     - port: metrics
+      path: /metrics
       interval: 30s
