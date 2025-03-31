@@ -1,0 +1,62 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tempo
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: tracing
+  source:
+    repoURL: https://grafana.github.io/helm-charts
+    chart: tempo
+    targetRevision: 1.7.1
+    helm:
+      skipCrds: true
+      values: |
+        tempo:
+          enabled: true
+          persistence:
+            enabled: false
+          replicas: 1
+          extraEnvFrom:
+            - secretRef:
+                name: tempo-s3-secret
+
+          config:
+            auth_enabled: false
+            server:
+              http_listen_port: 3100
+            distributor:
+              receivers:
+                jaeger:
+                  protocols:
+                    thrift_http:
+                    grpc:
+                otlp:
+                  protocols:
+                    grpc:
+                    http:
+            storage:
+              trace:
+                backend: s3
+                s3:
+                  bucket: j1-lab-tempo
+                  endpoint: s3.ap-northeast-2.amazonaws.com
+                  region: ap-northeast-2
+                  insecure: false
+                  forcepathstyle: true
+                wal:
+                  path: /tmp/tempo/wal
+
+        serviceMonitor:
+          enabled: true
+          additionalLabels:
+            release: prometheus-stack
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
