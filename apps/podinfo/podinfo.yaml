@@ -11,6 +11,8 @@ spec:
     targetRevision: 6.4.0
     helm:
       values: |-
+        podAnnotations:
+          sidecar.istio.io/inject: "true"
         ingress:
           enabled: false
         service:
