@@ -19,12 +19,8 @@ spec:
           enabled: true
 
           persistence:
-            enabled: true
-            size: 5Gi
-            storageClassName: local-path
-            accessModes:
-              - ReadWriteOnce
-
+            enabled: false
+            
           storage:
             type: "s3"
 
@@ -40,10 +36,6 @@ spec:
                     period: 24h
 
             storage_config:
-              tsdb_shipper:
-                active_index_directory: /var/loki/index
-                cache_location: /var/loki/index_cache
-                cache_ttl: 24h
               boltdb_shipper:
                 active_index_directory: /var/loki/index
                 cache_location: /var/loki/cache
