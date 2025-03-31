@@ -47,13 +47,13 @@ spec:
                   resources:
                     requests:
                       storage: 5Gi
-          serviceMonitorSelector:
-            matchExpressions:
-              - key: release
-                operator: In
-                values:
-                  - prometheus
-                  - prometheus-stack                  
+            serviceMonitorSelector:
+              matchExpressions:
+                - key: release
+                  operator: In
+                  values:
+                    - prometheus
+                    - prometheus-stack                  
           service:
             type: ClusterIP
             port: 9090
