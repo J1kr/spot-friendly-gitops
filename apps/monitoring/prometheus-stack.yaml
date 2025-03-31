@@ -47,6 +47,9 @@ spec:
                   resources:
                     requests:
                       storage: 5Gi
+            serviceMonitorSelector:
+              matchLabels:
+                release: prometheus                      
           service:
             type: ClusterIP
             port: 9090
