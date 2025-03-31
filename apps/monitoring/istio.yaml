@@ -52,7 +52,7 @@ spec:
             prefix: /
       route:
         - destination:
-            host: grafana.monitoring.svc.cluster.local
+            host: prometheus-stack-grafana.monitoring.svc.cluster.local
             port:
               number: 3000
 ---
