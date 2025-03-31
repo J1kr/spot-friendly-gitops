@@ -4,7 +4,7 @@ metadata:
   name: argocd-server
   namespace: argocd
   labels:
-    release: prometheus
+    release: prometheus-stack
 spec:
   selector:
     matchLabels:
@@ -22,7 +22,7 @@ metadata:
   name: argocd-repo-server
   namespace: argocd
   labels:
-    release: prometheus
+    release: prometheus-stack
 spec:
   selector:
     matchLabels:
@@ -40,7 +40,7 @@ metadata:
   name: argocd-app-controller
   namespace: argocd
   labels:
-    release: prometheus
+    release: prometheus-stack
 spec:
   selector:
     matchLabels:
