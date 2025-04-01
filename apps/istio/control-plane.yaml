@@ -23,6 +23,7 @@ spec:
           defaultProviders:
             accessLogging:
               - envoy
+              - otel              
           defaultConfig:
             tracing:
               sampling: 100
