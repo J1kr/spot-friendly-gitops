@@ -27,18 +27,11 @@ spec:
             - otel
           extensionProviders:
             - name: otel
-              otlp:
+              opentelemetry:
                 service: otel-collector-opentelemetry-collector.tracing.svc.cluster.local
                 port: 4317
-        global:
-          proxy:
-            tracer: "openCensusAgent"
-          tracer:
-            openCensusAgent:
-              address: otel-collector-opentelemetry-collector.tracing.svc.cluster.local:4317
-              context: b3
-              samplingRate: 100.0
-              
+
+
   destination:
     server: https://kubernetes.default.svc
     namespace: istio-system
