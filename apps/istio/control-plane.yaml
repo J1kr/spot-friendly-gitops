@@ -17,6 +17,8 @@ spec:
           autoscaleEnabled: false
         meshConfig:
           accessLogFile: /dev/stdout
+          accessLogFormat: |
+            [%START_TIME%] "%REQ(:METHOD)% %REQ(X-ENVOY-ORIGINAL-PATH?:PATH)% %PROTOCOL%" %RESPONSE_CODE% traceID=%REQ(x-b3-traceid)% spanID=%REQ(x-b3-spanid)%
           defaultProviders:
             accessLogging:
               - envoy
