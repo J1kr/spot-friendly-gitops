@@ -1,0 +1,52 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: otel-collector
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: tracing
+  source:
+    repoURL: https://open-telemetry.github.io/opentelemetry-helm-charts
+    chart: opentelemetry-collector
+    targetRevision: 0.76.0
+    helm:
+      values: |
+        mode: deployment
+
+        config:
+          receivers:
+            otlp:
+              protocols:
+                grpc:
+                http
+
+          exporters:
+            otlp:
+              endpoint: tempo.tracing.svc.cluster.local:4317
+              tls:
+                insecure: true
+
+          service:
+            pipelines:
+              traces:
+                receivers: [otlp]
+                exporters: [otlp]
+
+        service:
+          enabled: true
+          type: ClusterIP
+          ports:
+            - name: grpc-otlp
+              port: 4317
+            - name: http-otlp
+              port: 4318
+
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
