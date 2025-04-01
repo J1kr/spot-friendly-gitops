@@ -23,8 +23,9 @@ spec:
           defaultProviders:
             accessLogging:
               - envoy
-          tracing:
-            - otel
+          defaultConfig:
+            tracing:
+              sampling: 100
           extensionProviders:
             - name: otel
               opentelemetry:
