@@ -23,13 +23,13 @@ spec:
           defaultProviders:
             accessLogging:
               - envoy
-          tracing:
-            sampling: 100.0
-            extensionProviders:
-              - name: otel
-                otlp:
-                  service: otel-collector-opentelemetry-collector.tracing.svc.cluster.local
-                  port: 4317
+            tracing:
+              sampling: 100.0
+              extensionProviders:
+                - name: otel
+                  otlp:
+                    service: otel-collector-opentelemetry-collector.tracing.svc.cluster.local
+                    port: 4317
         defaultProviders:
           tracing:
             - otel     
