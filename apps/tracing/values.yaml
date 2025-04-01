@@ -4,11 +4,6 @@ image:
 mode: deployment
 
 config:
-  receivers:
-    otlp:
-      protocols:
-        grpc: {}
-        http: {}
 
   exporters:
     otlp:
@@ -25,8 +20,4 @@ config:
 service:
   enabled: true
   type: ClusterIP
-  # ports:
-  #   - name: grpc-otlp
-  #     port: 4317
-  #   - name: http-otlp
-  #     port: 4318
+
