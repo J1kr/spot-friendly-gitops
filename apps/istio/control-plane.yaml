@@ -16,6 +16,7 @@ spec:
         pilot:
           autoscaleEnabled: false
         meshConfig:
+          enableTracing: true
           accessLogFile: /dev/stdout
           accessLogFormat: |
             [%START_TIME%] "%REQ(:METHOD)% %REQ(X-ENVOY-ORIGINAL-PATH?:PATH)% %PROTOCOL%" %RESPONSE_CODE% traceID=%REQ(x-b3-traceid)% spanID=%REQ(x-b3-spanid)% "%REQ(X-REQUEST-ID)%" "%REQ(USER-AGENT)%" "%UPSTREAM_HOST%" %DURATION%ms
