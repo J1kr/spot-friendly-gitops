@@ -1,0 +1,32 @@
+image:
+  repository: otel/opentelemetry-collector-contrib
+  tag: 0.120.0
+mode: deployment
+
+config:
+  receivers:
+    otlp:
+      protocols:
+        grpc: {}
+        http: {}
+
+  exporters:
+    otlp:
+      endpoint: tempo.tracing.svc.cluster.local:4317
+      tls:
+        insecure: true
+
+  service:
+    pipelines:
+      traces:
+        receivers: [otlp]
+        exporters: [otlp]
+
+service:
+  enabled: true
+  type: ClusterIP
+  # ports:
+  #   - name: grpc-otlp
+  #     port: 4317
+  #   - name: http-otlp
+  #     port: 4318
