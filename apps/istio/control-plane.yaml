@@ -28,7 +28,7 @@ spec:
             extensionProviders:
               - name: otel
                 otlp:
-                  service: otel-collector.tracing.svc.cluster.local
+                  service: otel-collector-opentelemetry-collector.tracing.svc.cluster.local
                   port: 4317
         defaultProviders:
           tracing:
@@ -39,7 +39,7 @@ spec:
 
           tracer:
             openCensusAgent:
-              address: otel-collector.tracing.svc.cluster.local:4317
+              address: otel-collector-opentelemetry-collector.tracing.svc.cluster.local:4317
               context: b3
               samplingRate: 100.0             
   destination:
