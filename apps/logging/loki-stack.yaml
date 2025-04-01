@@ -56,10 +56,6 @@ spec:
                 shared_store: s3
                 cache_ttl: 24h
 
-          extraEnvFrom:
-            - secretRef:
-                name: loki-s3-secret
-
         promtail:
           enabled: true
           config:
