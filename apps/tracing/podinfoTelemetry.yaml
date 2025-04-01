@@ -1,0 +1,10 @@
+apiVersion: telemetry.istio.io/v1
+kind: Telemetry
+metadata:
+  name: default
+  namespace: podinfo  # 또는 tracing하고 싶은 네임스페이스
+spec:
+  tracing:
+    - providers:
+        - name: otel
+      randomSamplingPercentage: 100
