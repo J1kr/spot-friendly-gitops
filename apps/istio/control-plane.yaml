@@ -31,7 +31,16 @@ spec:
                   port: 4317
         defaultProviders:
           tracing:
-            - otel              
+            - otel     
+        global:
+          proxy:
+            tracer: "openCensusAgent"
+
+          tracer:
+            openCensusAgent:
+              address: otel-collector.tracing.svc.cluster.local:4317
+              context: b3
+              samplingRate: 100.0             
   destination:
     server: https://kubernetes.default.svc
     namespace: istio-system
