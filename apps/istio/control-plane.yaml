@@ -33,7 +33,7 @@ spec:
                 service: otel-collector-opentelemetry-collector.tracing.svc.cluster.local
                 port: 4317
                 resource_detectors:
-                  environment: {}
+                  environment: 
 
 
   destination:
