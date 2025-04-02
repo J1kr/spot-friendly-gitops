@@ -19,7 +19,7 @@ spec:
           enableTracing: true
           accessLogFile: /dev/stdout
           accessLogFormat: |
-            [%START_TIME%] "%REQ(:METHOD)% %REQ(X-ENVOY-ORIGINAL-PATH?:PATH)% %PROTOCOL%" %RESPONSE_CODE% traceID=%TRACE_ID% "%REQ(X-REQUEST-ID)%" "%REQ(USER-AGENT)%" "%UPSTREAM_HOST%" %DURATION%ms
+            [%START_TIME%] "%REQ(:METHOD)% %REQ(X-ENVOY-ORIGINAL-PATH?:PATH)% %PROTOCOL%" %RESPONSE_CODE% traceID=%TRACE_ID% x-request-id="%REQ(X-REQUEST-ID)%" "%REQ(USER-AGENT)%" "%UPSTREAM_HOST%" %DURATION%ms
           defaultProviders:
             accessLogging:
               - envoy
