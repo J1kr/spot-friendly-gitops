@@ -1,8 +1,8 @@
 apiVersion: telemetry.istio.io/v1
 kind: Telemetry
 metadata:
-  name: allTelemetry
-  namespace: istio-system  # 또는 tracing하고 싶은 네임스페이스, istio-system으로 둘시 전체
+  name: default
+  namespace: podinfo  # 또는 tracing하고 싶은 네임스페이스
 spec:
   tracing:
     - providers:
