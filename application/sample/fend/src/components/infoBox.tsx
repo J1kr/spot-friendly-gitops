@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { fetchInfo } from '../api/fetchInfo';
-import { tracer } from '../otel-init';
+import { tracer } from '../core/otel';
 import { context, trace } from '@opentelemetry/api';
-import { logger } from '../logger';
+import { logger } from '../core/logger';
 
 export const InfoBox = () => {
   const [info, setInfo] = useState<any>(null);
@@ -37,3 +37,5 @@ export const InfoBox = () => {
     </div>
   );
 };
+
+export default InfoBox;

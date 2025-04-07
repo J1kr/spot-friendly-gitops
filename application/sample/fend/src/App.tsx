@@ -1,8 +1,9 @@
 // src/App.tsx
-import { InfoBox } from './components/infoBox';
-import { logger } from './logger';
+import InfoBox from './components/infoBox';
+import MetricsButton from './components/metricsButton';
+import { logger } from './core/logger';
 
-function App() {
+const App = () => {
   logger.info('[app] App component initialized');
 
   return (
@@ -14,6 +15,7 @@ function App() {
         <strong> 로그 및 메트릭 수집 </strong>까지 테스트할 수 있습니다.
       </p>
       <InfoBox />
+      <MetricsButton />
     </div>
   );
 }

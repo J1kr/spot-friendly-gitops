@@ -1,4 +1,4 @@
-//src/metrics-init.ts
+//src/core/metrics-init.ts
 import express, { Request, Response } from 'express';
 import { Registry, collectDefaultMetrics, Gauge, Histogram } from 'prom-client';
 import { onCLS, onFID, onLCP, onFCP, onTTFB, onINP } from 'web-vitals';

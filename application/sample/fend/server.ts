@@ -3,8 +3,8 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import compression from 'compression';
 import promClient from 'prom-client';
-import { logger } from './src/logger';
-import { initMetrics } from './src/metrics-init';
+import { logger } from './src/core/logger';
+import { initMetrics } from './src/core/metrics';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

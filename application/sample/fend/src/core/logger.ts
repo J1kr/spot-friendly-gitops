@@ -1,4 +1,4 @@
-// src/logger.ts
+//src/core/logger.ts
 import pino from 'pino';
 import { context, trace } from '@opentelemetry/api';
 
