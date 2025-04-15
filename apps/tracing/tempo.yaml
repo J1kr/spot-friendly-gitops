@@ -33,12 +33,12 @@ spec:
               protocols:
                 thrift_http:
                 grpc:
-              otlp:
-                protocols:
-                  grpc:
-                    endpoint: 0.0.0.0:4317
-                  http:
-                    endpoint: 0.0.0.0:4318
+            otlp:
+              protocols:
+                grpc:
+                  endpoint: 0.0.0.0:4317
+                http:
+                  endpoint: 0.0.0.0:4318
                 
           ingester:
             trace_idle_period: 30s
