@@ -37,6 +37,11 @@ spec:
               protocols:
                 grpc:
                 http:
+                
+          ingester:
+            trace_idle_period: 30s
+            flush_check_period: 30s
+            max_block_duration: 2m
 
           storage:
             trace:
@@ -53,14 +58,6 @@ spec:
           multitenancyEnabled: false
           reportingEnabled: true
           retention: 24h
-
-          # tempo.yaml을 생성하는 템플릿 시스템이 toYaml로 받아서 구성
-          ingester: {}
-          querier: {}
-          queryFrontend: {}
-          overrides:
-            defaults: {}
-            per_tenant_override_config: /conf/overrides.yaml
 
           serviceMonitor:
             enabled: true
