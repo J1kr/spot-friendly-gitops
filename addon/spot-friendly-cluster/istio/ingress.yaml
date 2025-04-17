@@ -15,7 +15,7 @@ spec:
       values: |-
         name: istio-ingressgateway
         service:
-          type: LoadBalancer
+          type: nodePort
           ports:
             - name: status-port
               port: 15021
@@ -24,11 +24,9 @@ spec:
             - name: http2
               port: 80
               targetPort: 80
-              nodePort: 30080
             - name: https
               port: 443
               targetPort: 443
-              nodePort: 30443
         deployment:
           injectionTemplate: gateway      
   destination:

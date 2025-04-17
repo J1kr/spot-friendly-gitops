@@ -1,10 +1,33 @@
-apiVersion: telemetry.istio.io/v1
-kind: Telemetry
+apiVersion: argoproj.io/v1alpha1
+kind: Application
 metadata:
-  name: mesh-telemetry
-  namespace: istio-system  # 또는 tracing하고 싶은 네임스페이스, istio-system으로 둘시 전체
+  name: mesh-telemetry-spot
+  namespace: argocd
 spec:
-  tracing:
-    - providers:
-        - name: otel
-      randomSamplingPercentage: 100
+  project: default
+  destination:
+    name: spot-friendly-cluster
+    namespace: monitoring
+  source:
+    repoURL: https://charts.helm.sh/incubator
+    targetRevision: "0.2.5"
+    chart: raw
+    helm:
+      values: |-
+        resources:
+          - apiVersion: telemetry.istio.io/v1
+            kind: Telemetry
+            metadata:
+              name: mesh-telemetry
+              namespace: istio-system  # 또는 tracing하고 싶은 네임스페이스, istio-system으로 둘시 전체
+            spec:
+              tracing:
+                - providers:
+                    - name: otel
+                  randomSamplingPercentage: 100
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
