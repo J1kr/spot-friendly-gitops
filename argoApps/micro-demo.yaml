@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: micro-demo
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    name: spot-friendly-cluster
+    namespace: default
+  source:
+    repoURL: https://github.com/J1kr/spot-friendly-gitops
+    targetRevision: HEAD
+    path: application/micro-demo/base
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
