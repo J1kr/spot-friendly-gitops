@@ -1,0 +1,10 @@
+apiVersion: telemetry.istio.io/v1
+kind: Telemetry
+metadata:
+  name: mesh-telemetry
+  namespace: istio-system  # 또는 tracing하고 싶은 네임스페이스, istio-system으로 둘시 전체
+spec:
+  tracing:
+    - providers:
+        - name: otel
+      randomSamplingPercentage: 100

@@ -1,0 +1,49 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: istiod
+  namespace: argocd
+  annotations:
+   argocd.argoproj.io/sync-wave: "1"    
+spec:
+  project: default
+  source:
+    repoURL: https://istio-release.storage.googleapis.com/charts
+    chart: istiod
+    targetRevision: 1.25.0
+    helm:
+      values: |-
+        pilot:
+          autoscaleEnabled: false
+        meshConfig:
+          enableTracing: true
+          accessLogFile: /dev/stdout
+          accessLogFormat: |
+            [%START_TIME%] "%REQ(:METHOD)% %REQ(X-ENVOY-ORIGINAL-PATH?:PATH)% %PROTOCOL%" %RESPONSE_CODE% traceID=%TRACE_ID% x-request-id="%REQ(X-REQUEST-ID)%" "%REQ(USER-AGENT)%" "%UPSTREAM_HOST%" %DURATION%ms
+          defaultProviders:
+            accessLogging:
+              - envoy
+              - otel              
+          defaultConfig:
+            tracing:
+              sampling: 100
+          extensionProviders:
+            - name: otel
+              opentelemetry:
+                service: otel-collector-opentelemetry-collector.tracing.svc.cluster.local
+                port: 4317
+                resource_detectors:
+                  environment: 
+
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: istio-system
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true      
+
