@@ -14,5 +14,23 @@ module "eks" {
     "Name" = var.cluster_name
   }
 
-  eks_managed_node_groups = {} # Karpenter만 사용할 예정
+  eks_managed_node_groups = {
+    bootstrap = {
+      desired_size = 1
+      min_size     = 1
+      max_size     = 1
+
+      instance_types = ["t3a.medium"]
+      capacity_type  = "ON_DEMAND"
+
+      labels = {
+        node-role.kubernetes.io/bootstrap = "true"
+        spot-friendly/on-demand           = "true"        
+      }
+
+      tags = {
+        Name = "spot-friendly-bootstrap"
+      }
+    }
+  }
 }

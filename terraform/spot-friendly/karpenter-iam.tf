@@ -5,12 +5,12 @@ data "aws_iam_policy_document" "karpenter_assume_role" {
 
     principals {
       type        = "Federated"
-      identifiers = [module.eks.oidc_provider_arn]
+      identifiers = [module.eks.oidc_provider.arn]
     }
 
     condition {
       test     = "StringEquals"
-      variable = "${module.eks.oidc_provider_url}:sub"
+      variable = "${module.eks.oidc_provider.url}:sub"
       values   = ["system:serviceaccount:karpenter:karpenter"]
     }
   }
