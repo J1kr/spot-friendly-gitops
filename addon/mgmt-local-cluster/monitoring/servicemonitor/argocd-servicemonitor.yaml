@@ -1,0 +1,107 @@
+# argocd-server metrics Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: argocd-server-metrics
+  namespace: argocd
+  labels:
+    app.kubernetes.io/name: argocd-server-metrics
+spec:
+  selector:
+    app.kubernetes.io/name: argocd-server
+  ports:
+    - name: metrics
+      port: 8083
+      targetPort: 8083
+---
+# argocd-server ServiceMonitor
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: argocd-server
+  namespace: argocd
+  labels:
+    release: prometheus-stack
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: argocd-server-metrics
+  namespaceSelector:
+    matchNames:
+      - argocd
+  endpoints:
+    - port: metrics
+      path: /metrics
+      interval: 30s
+---
+# argocd-repo-server metrics Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: argocd-repo-server-metrics
+  namespace: argocd
+  labels:
+    app.kubernetes.io/name: argocd-repo-server-metrics
+spec:
+  selector:
+    app.kubernetes.io/name: argocd-repo-server
+  ports:
+    - name: metrics
+      port: 8084
+      targetPort: 8084
+---
+# argocd-repo-server ServiceMonitor
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: argocd-repo-server
+  namespace: argocd
+  labels:
+    release: prometheus-stack
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: argocd-repo-server-metrics
+  namespaceSelector:
+    matchNames:
+      - argocd
+  endpoints:
+    - port: metrics
+      path: /metrics
+      interval: 30s
+---
+# argocd-application-controller metrics Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: argocd-controller-metrics
+  namespace: argocd
+  labels:
+    app.kubernetes.io/name: argocd-controller-metrics
+spec:
+  selector:
+    app.kubernetes.io/name: argocd-application-controller
+  ports:
+    - name: metrics
+      port: 8082
+      targetPort: 8082
+---
+# argocd-application-controller ServiceMonitor
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: argocd-controller
+  namespace: argocd
+  labels:
+    release: prometheus-stack
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: argocd-controller-metrics
+  namespaceSelector:
+    matchNames:
+      - argocd
+  endpoints:
+    - port: metrics
+      path: /metrics
+      interval: 30s

@@ -1,0 +1,42 @@
+# k8s/fend-vite.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fend-vite
+  namespace: app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fend-vite
+  template:
+    metadata:
+      labels:
+        app: fend-vite
+    spec:
+      containers:
+        - name: fend-vite
+          image: dmogki/fend-vite:v0.1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3000
+          env:
+            - name: VITE_OTEL_EXPORTER_URL
+              value: http:/otel-collector-opentelemetry-collector.tracing.svc.cluster.local:4318/v1/traces
+            - name: VITE_LOG_LEVEL
+              value: info
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fend-vite
+  namespace: app
+spec:
+  selector:
+    app: fend-vite
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+  type: ClusterIP

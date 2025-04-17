@@ -1,0 +1,19 @@
+# 접근 URL: http://api.j1-lab.local/api/info
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: api-gateway
+spec:
+  hosts:
+    - api.j1-lab.local
+  gateways:
+    - mesh  # 내부 트래픽 전용
+  http:
+    - match:
+        - uri:
+            prefix: /api/info
+      route:
+        - destination:
+            host: bend.app.svc.cluster.local
+            port:
+              number: 80

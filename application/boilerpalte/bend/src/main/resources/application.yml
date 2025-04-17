@@ -1,0 +1,31 @@
+
+spring:
+  application:
+    name: bend-sample
+
+management:
+  server:
+    port: 8081
+  endpoints:
+    web:
+      exposure:
+        include: health, info, prometheus
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+
+  tracing:
+    sampling:
+      probability: 1.0
+    enabled: true
+
+opentelemetry:
+  exporter:
+    otlp:
+      endpoint: http://otel-collector-opentelemetry-collector.tracing.svc.cluster.local:4318
+      protocol: http/protobuf
+        

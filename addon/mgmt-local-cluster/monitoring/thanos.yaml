@@ -1,0 +1,61 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: thanos
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: monitoring
+  source:
+    repoURL: registry-1.docker.io/bitnamicharts
+    chart: thanos
+    targetRevision: 15.13.2
+    helm:
+      skipCrds: true
+      values: |
+        existingObjstoreSecret: thanos-objstore-secret
+
+        receive:
+          enabled: true
+          tsdbRetention: 6h
+          persistence:
+            enabled: false
+          resources:
+            requests:
+              memory: 1.5Gi
+            limits:
+              memory: 1.5Gi
+
+        storegateway:
+          enabled: true
+          persistence:
+            enabled: false
+
+        query:
+          enabled: true
+
+        compactor:
+          enabled: true
+          retentionResolutionRaw: 7d
+          retentionResolution5m: 14d
+          retentionResolution1h: 30d
+          persistence:
+            enabled: true
+            size: 5Gi
+          extraArgs:
+            - --delete-delay=24h
+
+        metrics:
+          enabled: true
+          serviceMonitor:
+            enabled: true
+            labels:
+              release: prometheus-stack
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

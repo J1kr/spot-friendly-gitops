@@ -1,0 +1,36 @@
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: bend-gateway
+  namespace: app
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - "bend.j1-lab.xyz"
+
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: bend-vs
+  namespace: app
+spec:
+  hosts:
+    - "bend.j1-lab.xyz"
+  gateways:
+    - bend-gateway
+  http:
+    - match:
+        - uri:
+            prefix: /api
+      route:
+        - destination:
+            host: bend.app.svc.cluster.local
+            port:
+              number: 80
