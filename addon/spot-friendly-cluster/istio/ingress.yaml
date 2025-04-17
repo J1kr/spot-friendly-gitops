@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: istio-ingressgateway
+  name: istio-ingressgateway-spot
   namespace: argocd
   annotations:
    argocd.argoproj.io/sync-wave: "2"    
@@ -32,7 +32,7 @@ spec:
         deployment:
           injectionTemplate: gateway      
   destination:
-    server: https://kubernetes.default.svc
+    name: spot-friendly-cluster
     namespace: istio-system
   syncPolicy:
     automated:
