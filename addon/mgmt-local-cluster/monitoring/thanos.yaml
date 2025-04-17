@@ -27,6 +27,10 @@ spec:
               memory: 1.5Gi
             limits:
               memory: 1.5Gi
+          extraFlags:
+            - --receive.replication-factor=1
+            - --tsdb.max-block-duration=2h
+            - --tsdb.retention=6h              
 
         storegateway:
           enabled: true
