@@ -34,16 +34,13 @@ resource "helm_release" "alb_controller" {
   namespace  = "kube-system"
   create_namespace = true
 
+  depends_on = [
+    module.eks.eks_managed_node_groups
+  ]
+  
   values = [<<EOF
 clusterName: spot-friendly-cluster
 region: ap-northeast-2
-nodeSelector:
-  spot-friendly/on-demand: "true"
-tolerations:
-  - key: "spot-friendly/on-demand"
-    operator: "Equal"
-    value: "true"
-    effect: "NoSchedule"
 serviceAccount:
   create: false
   name: aws-load-balancer-controller

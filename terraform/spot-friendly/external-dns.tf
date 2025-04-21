@@ -26,38 +26,3 @@ resource "kubernetes_service_account" "external_dns" {
   }
 }
 
-resource "helm_release" "external_dns" {
-  name       = "external-dns"
-  repository = "https://kubernetes-sigs.github.io/external-dns/"
-  chart      = "external-dns"
-  version    = "1.13.1"
-  namespace  = "kube-system"
-  create_namespace = true
-
-  values = [<<EOF
-provider: aws
-region: ap-northeast-2
-nodeSelector:
-  spot-friendly/on-demand: "true"
-tolerations:
-  - key: "spot-friendly/on-demand"
-    operator: "Equal"
-    value: "true"
-    effect: "NoSchedule"
-serviceAccount:
-  create: false
-  name: external-dns
-policy: sync
-logLevel: info
-domainFilters:
-  - mogki.com
-zoneIdFilters:
-  - Z085777417FRXNQ15XG8A
-interval: 1m
-registry: txt
-txtOwnerId: spot-friendly-cluster
-sources:
-  - ingress
-EOF
-  ]
-}

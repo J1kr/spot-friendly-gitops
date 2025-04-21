@@ -26,37 +26,3 @@ resource "kubernetes_service_account" "ebs_csi_controller" {
   }
 }
 
-resource "helm_release" "ebs_csi_driver" {
-  name       = "aws-ebs-csi-driver"
-  repository = "https://kubernetes-sigs.github.io/aws-ebs-csi-driver"
-  chart      = "aws-ebs-csi-driver"
-  version    = "2.26.1"
-  namespace  = "kube-system"
-  create_namespace = true
-
-  values = [<<EOF  
-driver:
-  name: ebs.csi.aws.com
-controller:
-  serviceAccount:
-    create: false
-    name: ebs-csi-controller-sa
-  nodeSelector:
-    spot-friendly/on-demand: "true"
-  tolerations:
-    - key: "spot-friendly/on-demand"
-      operator: "Equal"
-      value: "true"
-      effect: "NoSchedule"    
-storageClasses:
-  - name: ebs-sc
-    annotations:
-      storageclass.kubernetes.io/is-default-class: "true"
-    volumeBindingMode: WaitForFirstConsumer
-    reclaimPolicy: Delete
-    parameters:
-      type: gp3
-      encrypted: "true"
-EOF
-  ]
-}
