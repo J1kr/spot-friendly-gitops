@@ -22,7 +22,9 @@ spec:
             metadata:
               name: default
             spec:
-              amiFamily: AL2
+              amiSelectorTerms:
+                - tags:
+                    "karpenter.sh/discovery": spot-friendly-cluster
               role: arn:aws:iam::105847046109:instance-profile/KarpenterNodeInstanceProfile-spot-friendly-cluster
               subnetSelectorTerms:
                 - tags:
@@ -60,7 +62,6 @@ spec:
                       operator: In
                       values: ["t", "m"]
               limits:
-                resources:
                   cpu: 64
                   memory: 256Gi
   disruption:
