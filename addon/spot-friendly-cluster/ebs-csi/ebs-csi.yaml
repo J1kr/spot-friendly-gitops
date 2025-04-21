@@ -1,0 +1,40 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ebs-csi-driver
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  project: default
+  destination:
+    name: spot-friendly-cluster
+    namespace: kube-system
+  source:
+    repoURL: https://kubernetes-sigs.github.io/aws-ebs-csi-driver
+    chart: aws-ebs-csi-driver
+    targetRevision: 2.26.1
+    helm:
+      values: |-
+        driver:
+          name: ebs.csi.aws.com
+        controller:
+          serviceAccount:
+            create: false
+            name: ebs-csi-controller-sa
+        storageClasses:
+          - name: ebs-sc
+            annotations:
+              storageclass.kubernetes.io/is-default-class: "true"
+            volumeBindingMode: WaitForFirstConsumer
+            reclaimPolicy: Delete
+            parameters:
+              type: gp3
+              encrypted: "true"
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true

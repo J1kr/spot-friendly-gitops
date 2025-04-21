@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: node-termination-handler
+  name: metrics-server
   namespace: argocd
   annotations:
     argocd.argoproj.io/sync-wave: "1"    
@@ -11,16 +11,14 @@ spec:
     name: spot-friendly-cluster
     namespace: kube-system
   source:
-    repoURL: https://aws.github.io/eks-charts
-    chart: aws-node-termination-handler
-    targetRevision: 0.21.0
+    repoURL: https://kubernetes-sigs.github.io/metrics-server/
+    chart: metrics-server
+    targetRevision: 3.11.0 
     helm:
       values: |
-        enableSpotInterruptionDraining: true
-        enableScheduledEventDraining: true
-        enableRebalanceMonitoring: true
-        enableRebalanceDraining: true
-        awsRegion: ap-northeast-2
+        args:
+          - --kubelet-insecure-tls
+          - --kubelet-preferred-address-types=InternalIP
   syncPolicy:
     automated:
       selfHeal: true

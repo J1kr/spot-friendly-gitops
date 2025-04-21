@@ -1,0 +1,41 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: external-dns
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  project: default
+  destination:
+    name: spot-friendly-cluster
+    namespace: kube-system
+  source:
+    repoURL: https://kubernetes-sigs.github.io/external-dns/
+    chart: external-dns
+    targetRevision: 1.13.1
+    helm:
+      values: |-
+        provider: aws
+        region: ap-northeast-2
+        serviceAccount:
+          create: false
+          name: external-dns
+        policy: sync
+        logLevel: info
+        domainFilters:
+          - mogki.com
+        zoneIdFilters:
+          - Z085777417FRXNQ15XG8A
+        interval: 1m
+        registry: txt
+        txtOwnerId: spot-friendly-cluster
+        sources:
+          - ingress
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
