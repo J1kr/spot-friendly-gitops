@@ -11,7 +11,7 @@ spec:
     name: spot-friendly-cluster
     namespace: karpenter
   source:
-    repoURL: public.ecr.aws/karpenter/
+    repoURL: public.ecr.aws/karpenter
     chart: karpenter
     targetRevision: 1.4.0
     helm:
