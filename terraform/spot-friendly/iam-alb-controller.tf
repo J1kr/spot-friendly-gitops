@@ -25,25 +25,3 @@ resource "kubernetes_service_account" "alb_controller" {
     }
   }
 }
-
-resource "helm_release" "alb_controller" {
-  name       = "aws-load-balancer-controller"
-  repository = "https://aws.github.io/eks-charts"
-  chart      = "aws-load-balancer-controller"
-  version    = "1.7.1"
-  namespace  = "kube-system"
-  create_namespace = true
-
-  depends_on = [
-    module.eks.eks_managed_node_groups
-  ]
-  
-  values = [<<EOF
-clusterName: spot-friendly-cluster
-region: ap-northeast-2
-serviceAccount:
-  create: false
-  name: aws-load-balancer-controller
-EOF
-  ]
-}

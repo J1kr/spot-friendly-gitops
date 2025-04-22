@@ -19,8 +19,8 @@ module "vpc" {
   manage_default_security_group = true
 
   public_subnet_tags = {
-    "kubernetes.io/role/elb"                          = 1
-    "karpenter.sh/discovery/${var.cluster_name}"      = var.cluster_name
+    "kubernetes.io/role/elb"                     = 1
+    "karpenter.sh/discovery"                    = var.cluster_name  
   }
 
   tags = {

@@ -12,26 +12,16 @@ module "eks" {
   enable_cluster_creator_admin_permissions = true
   cluster_endpoint_private_access = false
   cluster_endpoint_public_access = true
-
-  eks_addons = {
-    coredns = {
-      addon_version     = "v1.11.1-eksbuild.4"
-      resolve_conflicts = "OVERWRITE"
-    }
-
-    kube-proxy = {
-      addon_version     = "v1.29.0-eksbuild.1"
-      resolve_conflicts = "OVERWRITE"
-    }
-
-    vpc-cni = {
-      addon_version     = "v1.15.3-eksbuild.1"
-      resolve_conflicts = "OVERWRITE"
-    }
-  }
+  
+  authentication_mode = "API_AND_CONFIG_MAP"
   
   tags = {
     "Name" = var.cluster_name
+  }
+
+  node_security_group_tags = {
+    "karpenter.sh/discovery" = var.cluster_name
+    "Name"                   = "${var.cluster_name}-node-sg"
   }
 
   eks_managed_node_groups = {
@@ -48,4 +38,31 @@ module "eks" {
       }
     }
   }
+}
+
+resource "aws_eks_addon" "coredns" {
+  cluster_name    = module.eks.cluster_name
+  addon_name      = "coredns"
+  addon_version   = "v1.11.4-eksbuild.2"
+  resolve_conflicts_on_create = "OVERWRITE"
+  resolve_conflicts_on_update = "OVERWRITE"
+  depends_on = [module.eks]
+}
+
+resource "aws_eks_addon" "kube_proxy" {
+  cluster_name    = module.eks.cluster_name
+  addon_name      = "kube-proxy"
+  addon_version   = "v1.29.0-eksbuild.1"
+  resolve_conflicts_on_create = "OVERWRITE"
+  resolve_conflicts_on_update = "OVERWRITE"
+  depends_on = [module.eks]
+}
+
+resource "aws_eks_addon" "vpc_cni" {
+  cluster_name    = module.eks.cluster_name
+  addon_name      = "vpc-cni"
+  addon_version   = "v1.19.3-eksbuild.1"
+  resolve_conflicts_on_create = "OVERWRITE"
+  resolve_conflicts_on_update = "OVERWRITE"
+  depends_on = [module.eks]
 }

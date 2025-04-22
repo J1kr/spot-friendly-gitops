@@ -19,7 +19,7 @@ output "acm_certificate_arn" {
   value       = aws_acm_certificate.wildcard_mogki.arn
 }
 
-output "karpenter_irsa_role_arn" {
-  description = "IAM Role ARN for Karpenter Service Account"
-  value       = aws_iam_role.karpenter_controller.arn
+output "karpenter_node_role_arn" {
+  description = "ARN of the Karpenter EC2 node IAM role"
+  value       = aws_iam_role.karpenter_node.arn
 }
