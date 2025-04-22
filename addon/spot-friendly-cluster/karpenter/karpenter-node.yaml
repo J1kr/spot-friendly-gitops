@@ -22,48 +22,57 @@ spec:
             metadata:
               name: default
             spec:
+              amiFamily: AL2023
               amiSelectorTerms:
-                - tags:
-                    "karpenter.sh/discovery": spot-friendly-cluster
-              role: arn:aws:iam::105847046109:instance-profile/KarpenterNodeInstanceProfile-spot-friendly-cluster
+                - alias: al2023@latest
+              role: "KarpenterNodeRole-spot-friendly-cluster"
               subnetSelectorTerms:
                 - tags:
-                    "karpenter.sh/discovery": spot-friendly-cluster
+                    karpenter.sh/discovery: spot-friendly-cluster
               securityGroupSelectorTerms:
                 - tags:
-                    "karpenter.sh/discovery": spot-friendly-cluster
+                    karpenter.sh/discovery: spot-friendly-cluster
 
-          - apiVersion: karpenter.sh/v1
+            ---
+            apiVersion: karpenter.sh/v1
             kind: NodePool
             metadata:
               name: spot
             spec:
               template:
-                metadata:
-                  labels:
-                    node.karpenter.sh/lifecycle: spot
                 spec:
                   nodeClassRef:
                     name: default
+                    kind: EC2NodeClass
+                    group: karpenter.k8s.aws
                   requirements:
-                    - key: "karpenter.k8s.aws/instance-cpu"
-                      operator: In
-                      values: ["4"]
-                    - key: "karpenter.k8s.aws/instance-memory"
-                      operator: In
-                      values: ["16384"]
-                    - key: "karpenter.k8s.aws/capacity-type"
+                    - key: karpenter.sh/capacity-type
                       operator: In
                       values: ["spot"]
-                    - key: "karpenter.k8s.aws/instance-hypervisor"
+                    - key: kubernetes.io/arch
                       operator: In
-                      values: ["nitro"]
-                    - key: "karpenter.k8s.aws/instance-category"
+                      values: ["amd64"]
+                    - key: kubernetes.io/os
+                      operator: In
+                      values: ["linux"]
+                    - key: karpenter.k8s.aws/instance-category
                       operator: In
                       values: ["t", "m"]
+                    - key: karpenter.k8s.aws/instance-cpu
+                      operator: In
+                      values: ["4"]
+                    - key: "topology.kubernetes.io/zone"
+                      operator: In
+                      values: ["ap-northeast-2a", "ap-northeast-2c"]          
+                    - key: karpenter.k8s.aws/instance-memory
+                      operator: In
+                      values: ["16384"]
+                    - key: karpenter.k8s.aws/instance-hypervisor
+                      operator: In
+                      values: ["nitro"]
               limits:
-                  cpu: 64
-                  memory: 256Gi
+                cpu: 64
+                memory: "256Gi"
   disruption:
     consolidationPolicy: WhenUnderutilized
     expireAfter: 24h
