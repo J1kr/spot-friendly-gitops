@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/J1kr/spot-friendly-gitops
     targetRevision: HEAD
-    path: aaddon/spot-friendly-cluster
+    path: addon/spot-friendly-cluster
     directory:
       recurse: true    
   destination:
