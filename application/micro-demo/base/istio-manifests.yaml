@@ -32,22 +32,22 @@ spec:
         name: http
         protocol: HTTP
       hosts:
-        - "boutique.j1-lab.xyz"
-# ---
-# apiVersion: gateway.networking.k8s.io/v1beta1
-# kind: HTTPRoute
-# metadata:
-#   name: frontend-route
-# spec:
-#   parentRefs:
-#   - name: istio-gateway
-#   rules:
-#   - matches:
-#     - path:
-#         value: /
-#     backendRefs:
-#     - name: frontend
-#       port: 80
+        - "boutique.mogki.com"
+---
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: HTTPRoute
+metadata:
+  name: frontend-route
+spec:
+  parentRefs:
+  - name: istio-gateway
+  rules:
+  - matches:
+    - path:
+        value: /
+    backendRefs:
+    - name: frontend
+      port: 80
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: ServiceEntry
@@ -89,7 +89,7 @@ metadata:
   namespace: default
 spec:
   hosts:
-    - "boutique.j1-lab.xyz"   # <<=== 외부에서 접속할 도메인
+    - "boutique.mogki.com"   # <<=== 외부에서 접속할 도메인
   gateways:
     - boutique-gateway
   http:
