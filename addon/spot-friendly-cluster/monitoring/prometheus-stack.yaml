@@ -73,7 +73,7 @@ spec:
               enabled: true
             datasources:
               enabled: true
-      skipCrds: false   
+      skipCrds: true   
   syncPolicy:
     automated:
       prune: true
