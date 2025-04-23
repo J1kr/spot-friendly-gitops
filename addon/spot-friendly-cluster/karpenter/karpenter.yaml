@@ -21,10 +21,10 @@ spec:
             create: false
             name: karpenter
         settings:
-          clusterName: spot-friendly-cluster
-          interruptionQueue: spot-friendly-cluster
+          clusterName: spot-friendly
+          interruptionQueue: spot-friendly-queue
           aws:
-            defaultInstanceProfile: KarpenterNodeInstanceProfile-spot-friendly-cluster
+            defaultInstanceProfile: KarpenterNodeInstanceProfile-spot-friendly
   syncPolicy:
     automated:
       selfHeal: true
