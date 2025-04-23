@@ -28,10 +28,10 @@ spec:
               role: "KarpenterNodeRole-spot-friendly"
               subnetSelectorTerms:
                 - tags:
-                    karpenter.sh/discovery: spot-friendly-cluster
+                    karpenter.sh/discovery: spot-friendly
               securityGroupSelectorTerms:
                 - tags:
-                    karpenter.sh/discovery: spot-friendly-cluster
+                    karpenter.sh/discovery: spot-friendly
               blockDeviceMappings:
                 - deviceName: /dev/xvda
                   ebs:
