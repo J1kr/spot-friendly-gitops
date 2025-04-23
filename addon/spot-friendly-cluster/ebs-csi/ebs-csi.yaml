@@ -23,7 +23,7 @@ spec:
             create: false
             name: ebs-csi-controller-sa
         storageClasses:
-          - name: ebs-sc
+          - name: gp3
             annotations:
               storageclass.kubernetes.io/is-default-class: "true"
             volumeBindingMode: WaitForFirstConsumer
