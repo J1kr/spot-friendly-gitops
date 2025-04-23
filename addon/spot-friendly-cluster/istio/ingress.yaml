@@ -19,7 +19,7 @@ spec:
           tag: 1.25.0      
         name: istio-ingressgateway
         service:
-          type: nodePort
+          type: NodePort
           ports:
             - name: status-port
               port: 15021
