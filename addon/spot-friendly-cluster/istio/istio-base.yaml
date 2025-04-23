@@ -12,7 +12,7 @@ spec:
     chart: base
     targetRevision: 1.25.0
   destination:
-    name: spot-friendly-cluster
+    name: spot-friendly
     namespace: istio-system
   syncPolicy:
     automated:

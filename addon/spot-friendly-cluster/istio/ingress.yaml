@@ -34,7 +34,7 @@ spec:
         deployment:
           injectionTemplate: gateway      
   destination:
-    name: spot-friendly-cluster
+    name: spot-friendly
     namespace: istio-system
   syncPolicy:
     automated:

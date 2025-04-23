@@ -20,7 +20,7 @@ spec:
           create: false
           name: aws-load-balancer-controller
   destination:
-    name: spot-friendly-cluster
+    name: spot-friendly
     namespace: kube-system
   syncPolicy:
     automated:

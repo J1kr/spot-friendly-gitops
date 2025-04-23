@@ -8,7 +8,7 @@ metadata:
 spec:
   project: default
   destination:
-    name: spot-friendly-cluster
+    name: spot-friendly
     namespace: kube-system
   source:
     repoURL: https://aws.github.io/eks-charts
