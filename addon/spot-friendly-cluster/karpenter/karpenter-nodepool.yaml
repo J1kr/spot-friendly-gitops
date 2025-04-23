@@ -56,9 +56,6 @@ spec:
               limits:
                 cpu: 64
                 memory: "256Gi"
-              disruption:
-                consolidationPolicy: WhenUnderutilized
-                expireAfter: 24h
   syncPolicy:
     automated:
       selfHeal: true
