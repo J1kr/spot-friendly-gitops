@@ -25,7 +25,7 @@ spec:
               amiFamily: AL2023
               amiSelectorTerms:
                 - alias: al2023@latest
-              role: "KarpenterNodeRole-spot-friendly-cluster"
+              role: "KarpenterNodeRole-spot-friendly"
               subnetSelectorTerms:
                 - tags:
                     karpenter.sh/discovery: spot-friendly-cluster
