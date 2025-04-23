@@ -30,7 +30,7 @@ spec:
           extensionProviders:
             - name: otel
               opentelemetry:
-                service: otel-collector-opentelemetry-collector.tracing.svc.cluster.local
+                service: otel-collector-spot-opentelemetry-collector.tracing.svc.cluster.local
                 port: 4317
                 resource_detectors:
                   environment: 
