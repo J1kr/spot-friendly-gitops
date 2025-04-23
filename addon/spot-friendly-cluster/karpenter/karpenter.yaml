@@ -9,7 +9,7 @@ spec:
   project: default
   destination:
     name: spot-friendly-cluster
-    namespace: karpenter
+    namespace: kube-system
   source:
     repoURL: public.ecr.aws/karpenter
     chart: karpenter
