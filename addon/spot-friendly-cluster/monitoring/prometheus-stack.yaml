@@ -73,10 +73,11 @@ spec:
               enabled: true
             datasources:
               enabled: true
-      skipCrds: true   
+      skipCrds: false   
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
+      - ServerSideApply=true      
