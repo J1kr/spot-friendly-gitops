@@ -17,6 +17,7 @@ spec:
     helm:
       values: |
         controller:
+          replicas: 1
           serviceAccount:
             create: false
             name: karpenter
