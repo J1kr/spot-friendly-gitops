@@ -1,6 +1,6 @@
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
-  version = "20.11.0"
+  version = "20.13.0"
 
   cluster_name    = var.cluster_name
   cluster_version = "1.29"
@@ -14,14 +14,11 @@ module "eks" {
   cluster_endpoint_public_access = true
   
   authentication_mode = "API_AND_CONFIG_MAP"
-  
+  create_node_security_group = false
+  node_security_group_id = aws_security_group.node_sg.id
+
   tags = {
     "Name" = var.cluster_name
-  }
-
-  node_security_group_tags = {
-    "karpenter.sh/discovery" = var.cluster_name
-    "Name"                   = "${var.cluster_name}-node-sg"
   }
 
   eks_managed_node_groups = {
@@ -32,7 +29,7 @@ module "eks" {
 
       instance_types = ["t3a.medium"]
       capacity_type  = "ON_DEMAND"
-      
+
       tags = {
         Name = "spot-friendly-bootstrap"
       }
@@ -46,6 +43,11 @@ resource "aws_eks_addon" "coredns" {
   addon_version   = "v1.11.4-eksbuild.2"
   resolve_conflicts_on_create = "OVERWRITE"
   resolve_conflicts_on_update = "OVERWRITE"
+
+  configuration_values = jsonencode({
+    replicaCount = 1
+  })  
+
   depends_on = [module.eks]
 }
 
@@ -55,6 +57,7 @@ resource "aws_eks_addon" "kube_proxy" {
   addon_version   = "v1.29.0-eksbuild.1"
   resolve_conflicts_on_create = "OVERWRITE"
   resolve_conflicts_on_update = "OVERWRITE"
+
   depends_on = [module.eks]
 }
 
@@ -64,5 +67,6 @@ resource "aws_eks_addon" "vpc_cni" {
   addon_version   = "v1.19.3-eksbuild.1"
   resolve_conflicts_on_create = "OVERWRITE"
   resolve_conflicts_on_update = "OVERWRITE"
+
   depends_on = [module.eks]
 }

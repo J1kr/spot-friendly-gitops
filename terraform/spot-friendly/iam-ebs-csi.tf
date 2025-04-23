@@ -24,5 +24,6 @@ resource "kubernetes_service_account" "ebs_csi_controller" {
       "eks.amazonaws.com/role-arn" = module.ebs_csi_irsa.iam_role_arn
     }
   }
+  depends_on = [module.eks]
 }
 

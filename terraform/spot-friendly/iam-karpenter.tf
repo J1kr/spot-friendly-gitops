@@ -24,6 +24,7 @@ resource "kubernetes_service_account" "karpenter" {
       "eks.amazonaws.com/role-arn" = module.karpenter_irsa.iam_role_arn
     }
   }
+  depends_on = [module.eks]
 }
 
 # Node용 IAM Role

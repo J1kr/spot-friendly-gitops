@@ -24,5 +24,6 @@ resource "kubernetes_service_account" "external_dns" {
       "eks.amazonaws.com/role-arn" = module.external_dns_irsa.iam_role_arn
     }
   }
+  depends_on = [module.eks]
 }
 

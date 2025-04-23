@@ -24,4 +24,5 @@ resource "kubernetes_service_account" "alb_controller" {
       "eks.amazonaws.com/role-arn" = module.alb_controller_irsa.iam_role_arn
     }
   }
+  depends_on = [module.eks]
 }
