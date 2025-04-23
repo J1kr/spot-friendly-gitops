@@ -14,6 +14,16 @@ module "eks" {
   cluster_endpoint_public_access = true
   
   authentication_mode = "API_AND_CONFIG_MAP"
+  cluster_security_group_additional_rules = {
+    ingress_nodes_443 = {
+      description              = "Allow NodeGroup to access Control Plane on 443"
+      protocol                 = "tcp"
+      from_port                = 443
+      to_port                  = 443
+      type                     = "ingress"
+      source_node_security_group = true
+    }
+  }  
   create_node_security_group = false
   node_security_group_id = aws_security_group.node_sg.id
 

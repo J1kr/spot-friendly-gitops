@@ -1,12 +1,12 @@
 # NodeGroup용 SG 생성
 resource "aws_security_group" "node_sg" {
-  name        = "spot-friendly-cluster-node-sg"
+  name        = "${var.cluster_name}-node"
   description = "Custom SG for EKS NodeGroup"
   vpc_id      = module.vpc.vpc_id
 
   tags = {
     "karpenter.sh/discovery" = var.cluster_name
-    "Name"                   = "${var.cluster_name}-node-sg"
+    "Name"                   = "${var.cluster_name}-node"
   }
 }
 
@@ -17,7 +17,7 @@ resource "aws_security_group_rule" "allow_controlplane_to_node_ephemeral" {
   to_port                  = 65535
   protocol                 = "tcp"
   security_group_id        = aws_security_group.node_sg.id
-  source_security_group_id = module.eks.cluster_primary_security_group_id
+  source_security_group_id = module.eks.cluster_security_group_id
   description              = "Allow all Control Plane to NodeGroup ephemeral TCP ports"
 }
 
@@ -27,7 +27,7 @@ resource "aws_security_group_rule" "allow_controlplane_to_node_tls" {
   to_port                  = 443
   protocol                 = "tcp"
   security_group_id        = aws_security_group.node_sg.id
-  source_security_group_id = module.eks.cluster_primary_security_group_id
+  source_security_group_id = module.eks.cluster_security_group_id
   description              = "Allow Control Plane to NodeGroup on port 443 (TLS webhook etc)"
 }
 

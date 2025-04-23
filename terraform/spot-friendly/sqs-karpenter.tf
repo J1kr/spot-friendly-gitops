@@ -1,5 +1,5 @@
 resource "aws_sqs_queue" "karpenter_interruption_queue" {
-  name = "spot-friendly-cluster"
+  name = "${var.cluster_name}-queue"
 
   # FIFO 아님, 일반 큐
   fifo_queue = false

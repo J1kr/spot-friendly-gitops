@@ -3,5 +3,5 @@ variable "aws_region" {
 }
 
 variable "cluster_name" {
-  default = "spot-friendly-cluster"
+  default = "spot-friendly"
 }
