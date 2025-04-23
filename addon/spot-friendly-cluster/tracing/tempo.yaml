@@ -56,7 +56,6 @@ spec:
                 region: ap-northeast-2
                 insecure: false
                 forcepathstyle: true
-                root_path: spot-cluster/
               wal:
                 path: /tmp/tempo/wal
 
