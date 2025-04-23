@@ -32,6 +32,12 @@ spec:
               securityGroupSelectorTerms:
                 - tags:
                     karpenter.sh/discovery: spot-friendly-cluster
+              blockDeviceMappings:
+                - deviceName: /dev/xvda
+                  ebs:
+                    volumeSize: 20Gi
+                    volumeType: gp3
+                    encrypted: true                    
 
             ---
             apiVersion: karpenter.sh/v1

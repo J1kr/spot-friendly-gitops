@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: node-termination-handler
+  name: node-termination-handler-spot
   namespace: argocd
   annotations:
     argocd.argoproj.io/sync-wave: "1"    
