@@ -1,10 +1,9 @@
-systemapiVersion: argoproj.io/v1alpha1
+apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: ingress-spot
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "-1"
 spec:
   project: default
   destination:
