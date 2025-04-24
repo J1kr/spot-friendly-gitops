@@ -14,7 +14,7 @@ spec:
     targetRevision: "0.2.5"
     chart: raw
     helm:
-      values: |
+      values: |-
         resources:
           - apiVersion: networking.k8s.io/v1
             kind: Ingress

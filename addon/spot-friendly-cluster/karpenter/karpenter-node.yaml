@@ -4,7 +4,6 @@ metadata:
   name: karpenter-nodeclass
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "0"    
 spec:
   project: default
   destination:
@@ -78,9 +77,4 @@ spec:
               limits:
                 cpu: 64
                 memory: "256Gi"                          
-  syncPolicy:
-    automated:
-      selfHeal: true
-      prune: true
-    syncOptions:
-      - CreateNamespace=true
+
