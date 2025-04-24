@@ -3,7 +3,6 @@ kind: Application
 metadata:
   name: ingress-spot
   namespace: argocd
-  annotations:
 spec:
   project: default
   destination:
