@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://istio-release.storage.googleapis.com/charts
     chart: istiod
-    targetRevision: 1.25.0
+    targetRevision: 1.25.2
     helm:
       values: |-
         pilot:
@@ -35,10 +35,17 @@ spec:
                 resource_detectors:
                   environment: 
 
-
   destination:
     name: spot-friendly
     namespace: istio-system
+  ignoreDifferences:
+    - group: admissionregistration.k8s.io
+      jqPathExpressions:
+        - >-
+          .webhooks[] | select(.name == "rev.validation.istio.io") |
+          .failurePolicy
+      kind: ValidatingWebhookConfiguration
+      name: istio-validator-istio-system    
   syncPolicy:
     automated:
       selfHeal: true
