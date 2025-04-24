@@ -76,4 +76,10 @@ spec:
               limits:
                 cpu: 64
                 memory: "256Gi"                          
-
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
