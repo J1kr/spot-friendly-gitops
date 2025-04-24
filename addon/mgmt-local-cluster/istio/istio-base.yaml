@@ -14,6 +14,14 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: istio-system
+  ignoreDifferences:
+    - group: admissionregistration.k8s.io
+      jqPathExpressions:
+        - >-
+          .webhooks[] | select(.name == "rev.validation.istio.io") |
+          .failurePolicy
+      kind: ValidatingWebhookConfiguration
+      name: istiod-default-validator   
   syncPolicy:
     automated:
       selfHeal: true
