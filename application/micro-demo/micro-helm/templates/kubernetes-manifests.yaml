@@ -1,0 +1,164 @@
+{{- if .Values.loadgenerator.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: loadgenerator
+  labels:
+    app: loadgenerator
+spec:
+  replicas: {{ .Values.loadgenerator.replicaCount }}
+  selector:
+    matchLabels:
+      app: loadgenerator
+  template:
+    metadata:
+      labels:
+        app: loadgenerator
+      annotations:
+        sidecar.istio.io/rewriteAppHTTPProbers: "true"
+    spec:
+      serviceAccountName: loadgenerator
+      terminationGracePeriodSeconds: 5
+      restartPolicy: Always
+      securityContext:
+        fsGroup: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
+        runAsUser: 1000
+      initContainers:
+        - name: frontend-check
+          image: busybox:latest
+          command:
+            - /bin/sh
+            - -exc
+            - |
+              MAX_RETRIES=12
+              RETRY_INTERVAL=10
+              for i in $(seq 1 $MAX_RETRIES); do
+                echo "Attempt $i: Pinging frontend..."
+                STATUSCODE=$(wget --server-response http://frontend:80 2>&1 | awk '/^  HTTP/{print $2}')
+                if [ $STATUSCODE -eq 200 ]; then
+                    echo "Frontend is reachable."
+                    exit 0
+                fi
+                echo "Error: Could not reach frontend - Status code: ${STATUSCODE}"
+                sleep $RETRY_INTERVAL
+              done
+              echo "Failed to reach frontend after $MAX_RETRIES attempts."
+              exit 1
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+            privileged: false
+            readOnlyRootFilesystem: true
+      containers:
+        - name: main
+          image: "{{ .Values.loadgenerator.image.repository }}:{{ .Values.loadgenerator.image.tag }}"
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+            privileged: false
+            readOnlyRootFilesystem: true
+          env:
+            - name: FRONTEND_ADDR
+              value: "frontend:80"
+            - name: USERS
+              value: "{{ .Values.loadgenerator.env.users }}"
+            - name: RATE
+              value: "{{ .Values.loadgenerator.env.rate }}"
+          resources:
+            requests:
+              cpu: {{ .Values.loadgenerator.resources.requests.cpu | default "300m" | quote }}
+              memory: {{ .Values.loadgenerator.resources.requests.memory | default "256Mi" | quote }}
+            limits:
+              cpu: {{ .Values.loadgenerator.resources.limits.cpu | default "500m" | quote }}
+              memory: {{ .Values.loadgenerator.resources.limits.memory | default "512Mi" | quote }}
+      {{- with .Values.loadgenerator.nodeSelector }}
+      nodeSelector: {{ toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.loadgenerator.affinity }}
+      affinity: {{ toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.loadgenerator.tolerations }}
+      tolerations: {{ toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.loadgenerator.topologySpreadConstraints }}
+      topologySpreadConstraints: {{ toYaml . | nindent 8 }}
+      {{- end }}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: loadgenerator
+{{- end }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-cart
+  labels:
+    app: redis-cart
+spec:
+  selector:
+    matchLabels:
+      app: redis-cart
+  template:
+    metadata:
+      labels:
+        app: redis-cart
+    spec:
+      securityContext:
+        fsGroup: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
+        runAsUser: 1000
+      containers:
+      - name: redis
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
+          privileged: false
+          readOnlyRootFilesystem: true
+        image: redis:alpine
+        ports:
+        - containerPort: 6379
+        readinessProbe:
+          periodSeconds: 5
+          tcpSocket:
+            port: 6379
+        livenessProbe:
+          periodSeconds: 5
+          tcpSocket:
+            port: 6379
+        volumeMounts:
+        - mountPath: /data
+          name: redis-data
+        resources:
+          limits:
+            memory: 256Mi
+            cpu: 125m
+          requests:
+            cpu: 70m
+            memory: 200Mi
+      volumes:
+      - name: redis-data
+        emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-cart
+  labels:
+    app: redis-cart
+spec:
+  type: ClusterIP
+  selector:
+    app: redis-cart
+  ports:
+  - name: tcp-redis
+    port: 6379
+    targetPort: 6379

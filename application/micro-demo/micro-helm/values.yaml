@@ -1,0 +1,132 @@
+frontend:
+  replicaCount: 1
+  image:
+    repository: dmogki/frontend
+    tag: v0.0.0
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
+  topologySpreadConstraints: []
+
+adservice:
+  enabled: true
+  replicaCount: 1
+  image:
+    repository: us-central1-docker.pkg.dev/google-samples/microservices-demo/adservice
+    tag: v0.10.2
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
+  topologySpreadConstraints: []
+
+checkoutservice:
+  enabled: true
+  replicaCount: 1
+  image:
+    repository: dmogki/checkoutservice
+    tag: v0.0.0
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
+  topologySpreadConstraints: []  
+
+emailservice:
+  enabled: true
+  replicaCount: 1
+  image:
+    repository: dmogki/emailservice
+    tag: v0.0.0
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
+  topologySpreadConstraints: []
+
+paymentservice:
+  enabled: true
+  replicaCount: 1
+  image:
+    repository: dmogki/paymentservice
+    tag: v0.0.3
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
+  topologySpreadConstraints: []
+
+recommendationservice:
+  image:
+    repository: dmogki/recommendationservice
+    tag: v0.0.0
+  replicaCount: 1
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
+  topologySpreadConstraints: []  
+
+
+cartservice:
+  enabled: true
+  replicaCount: 1
+  image:
+    repository: us-central1-docker.pkg.dev/google-samples/microservices-demo/cartservice
+    tag: v0.10.2
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
+  topologySpreadConstraints: []  
+
+currencyservice:
+  enabled: true
+  replicaCount: 1
+  image:
+    repository: dmogki/currencyservice
+    tag: v0.0.2
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
+  topologySpreadConstraints: []  
+
+productcatalogservice:
+  enabled: true
+  replicaCount: 1
+  image:
+    repository: dmogki/productcatalogservice
+    tag: v0.0.0
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
+  topologySpreadConstraints: []  
+
+shippingservice:
+  enabled: true
+  replicaCount: 1
+  image:
+    repository: dmogki/shippingservice
+    tag: v0.0.0
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
+  topologySpreadConstraints: []  
+
+loadgenerator:
+  enabled: true
+  image:
+    repository: us-central1-docker.pkg.dev/google-samples/microservices-demo/loadgenerator
+    tag: v0.10.2
+  replicaCount: 1
+  env:
+    users: "15"
+    rate: "2"
+  resources:
+    requests:
+      cpu: 300m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
+  topologySpreadConstraints: []  
+
+istio:
+  host: boutique.mogki.com  
