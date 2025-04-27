@@ -1,0 +1,48 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: public-gateway
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    name: spot-friendly
+    namespace: istio-system
+  source:
+    repoURL: https://charts.helm.sh/incubator
+    targetRevision: "0.2.5"
+    chart: raw
+    helm:
+      values: |-
+        resources:
+          - apiVersion: networking.istio.io/v1beta1
+            kind: Gateway
+            metadata:
+              name: public-gateway
+              namespace: istio-system
+            spec:
+              selector:
+                istio: ingressgateway
+              servers:
+                - port:
+                    number: 80
+                    name: http
+                    protocol: HTTP
+                  hosts:
+                    - '*'
+                - port:
+                    number: 443
+                    name: https
+                    protocol: HTTPS
+                  hosts:
+                    - '*'
+                  tls:
+                    mode: SIMPLE
+                    credentialName: wildcard-mogki-com-tls                      
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
