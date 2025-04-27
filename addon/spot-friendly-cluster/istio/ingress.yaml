@@ -32,7 +32,9 @@ spec:
               port: 443
               targetPort: 443
         deployment:
-          injectionTemplate: gateway      
+          enabled: false
+        daemonset:
+          enabled: true   
   destination:
     name: spot-friendly
     namespace: istio-system
