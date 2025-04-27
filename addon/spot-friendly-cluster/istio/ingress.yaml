@@ -31,10 +31,7 @@ spec:
             - name: https
               port: 443
               targetPort: 443
-        deployment:
-          enabled: false
-        daemonset:
-          enabled: true   
+        kind: DaemonSet
   destination:
     name: spot-friendly
     namespace: istio-system
