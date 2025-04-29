@@ -51,9 +51,16 @@ spec:
               cluster: spot-friendly-cluster
             thanos:
               objectStorageConfig:
-                existingSecret:
-                  name: thanos-objstore-secret
-                  key: objstore.yaml
+                config:
+                  type: S3
+                  config:
+                    bucket: j1-lab-thanos
+                    endpoint: s3.ap-northeast-2.amazonaws.com
+                    region: ap-northeast-2
+                    insecure: false
+                    signature_version2: false
+                    sse_config: {}
+                    http_config: {}
 
           service:
             type: ClusterIP
@@ -61,8 +68,14 @@ spec:
             annotations:
               prometheus.io/scrape: "true"
 
+        serviceAccount:
+          create: true
+          name: prometheus
+          annotations:
+            eks.amazonaws.com/role-arn: arn:aws:iam::105847046109:role/thanos-irsa
+            
         grafana:
-          enabled: false
+          enabled: true
           service:
             type: ClusterIP
             port: 80

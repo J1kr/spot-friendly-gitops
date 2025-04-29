@@ -25,7 +25,7 @@ spec:
           clusterName: spot-friendly
           interruptionQueue: spot-friendly-queue
           aws:
-            defaultInstanceProfile: KarpenterNodeInstanceProfile-spot-friendly
+            defaultInstanceProfile: KarpenterNodeInstanceProfile-spot-friendly 
   syncPolicy:
     automated:
       selfHeal: true

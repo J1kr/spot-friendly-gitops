@@ -23,10 +23,6 @@ spec:
           persistence:
             enabled: false
 
-          extraEnvFrom:
-            - secretRef:
-                name: tempo-s3-secret
-
           server:
             http_listen_port: 3100
 
@@ -58,6 +54,12 @@ spec:
                 forcepathstyle: true
               wal:
                 path: /tmp/tempo/wal
+
+          serviceAccount:
+            create: true
+            name: tempo
+            annotations:
+              eks.amazonaws.com/role-arn: arn:aws:iam::105847046109:role/tempo-irsa
 
           multitenancyEnabled: false
           reportingEnabled: true

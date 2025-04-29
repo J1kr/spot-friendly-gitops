@@ -4,7 +4,7 @@ metadata:
   name: loki-spot
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "2"  
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   project: default
   destination:
@@ -19,24 +19,10 @@ spec:
       values: |
         loki:
           enabled: true
-
           persistence:
             enabled: false
-
           storage:
             type: "s3"
-
-          env:
-            - name: AWS_ACCESS_KEY_ID
-              valueFrom:
-                secretKeyRef:
-                  name: loki-s3-secret
-                  key: AWS_ACCESS_KEY_ID
-            - name: AWS_SECRET_ACCESS_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: loki-s3-secret
-                  key: AWS_SECRET_ACCESS_KEY
           config:
             schema_config:
               configs:
@@ -57,6 +43,12 @@ spec:
               boltdb_shipper:
                 shared_store: s3
                 cache_ttl: 24h
+
+          serviceAccount:
+            create: true
+            name: loki
+            annotations:
+              eks.amazonaws.com/role-arn: arn:aws:iam::105847046109:role/loki-irsa
 
         promtail:
           enabled: true

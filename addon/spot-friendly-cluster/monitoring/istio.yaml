@@ -1,80 +1,64 @@
-# apiVersion: argoproj.io/v1alpha1
-# kind: Application
-# metadata:
-#   name: istio-monitoring
-#   namespace: argocd
-#   annotations:
-#     argocd.argoproj.io/sync-wave: "3"    
-# spec:
-#   project: default
-#   destination:
-#     name: spot-friendly
-#     namespace: monitoring
-#   source:
-#     repoURL: https://charts.helm.sh/incubator
-#     targetRevision: "0.2.5"
-#     chart: raw
-#     helm:
-#       values: |-
-#         resources:
-#           - apiVersion: networking.istio.io/v1beta1
-#             kind: Gateway
-#             metadata:
-#               name: monitoring-gateway
-#               namespace: monitoring
-#             spec:
-#               selector:
-#                 istio: ingressgateway
-#               servers:
-#                 - port:
-#                     number: 80
-#                     name: http
-#                     protocol: HTTP
-#                   hosts:
-#                     - prometheus.mogki.com
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: istio-monitoring
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"    
+spec:
+  project: default
+  destination:
+    name: spot-friendly
+    namespace: monitoring
+  source:
+    repoURL: https://charts.helm.sh/incubator
+    targetRevision: "0.2.5"
+    chart: raw
+    helm:
+      values: |-
+        resources:
+          - apiVersion: networking.istio.io/v1beta1
+            kind: VirtualService
+            metadata:
+              name: prometheus-vs
+              namespace: monitoring
+            spec:
+              hosts:
+                - prometheus.mogki.com
+              gateways:
+                - istio-system/public-gateway
+              http:
+                - match:
+                    - uri:
+                        prefix: /
+                  route:
+                    - destination:
+                        host: prometheus-operated.monitoring.svc.cluster.local
+                        port:
+                          number: 9090
 
-#           - apiVersion: networking.istio.io/v1beta1
-#             kind: VirtualService
-#             metadata:
-#               name: prometheus-vs
-#               namespace: monitoring
-#             spec:
-#               hosts:
-#                 - prometheus.mogki.com
-#               gateways:
-#                 - monitoring-gateway
-#               http:
-#                 - match:
-#                     - uri:
-#                         prefix: /
-#                   route:
-#                     - destination:
-#                         host: prometheus-operated.monitoring.svc.cluster.local
-#                         port:
-#                           number: 9090
-
-#           - apiVersion: networking.istio.io/v1beta1
-#             kind: VirtualService
-#             metadata:
-#               name: grafana-vs
-#               namespace: monitoring
-#             spec:
-#               hosts:
-#                 - grafana.mogki.com
-#               gateways:
-#                 - monitoring-gateway
-#               http:
-#                 - match:
-#                     - uri:
-#                         prefix: /
-#                   route:
-#                     - destination:
-#                         host: prometheus-stack-grafana.monitoring.svc.cluster.local
-#                         port:
-#                           number: 80
-#   syncPolicy:
-#     automated:
-#       selfHeal: true
-#       prune: true
-#     syncOptions:
-#       - CreateNamespace=true
+          - apiVersion: networking.istio.io/v1beta1
+            kind: VirtualService
+            metadata:
+              name: grafana-vs
+              namespace: monitoring
+            spec:
+              hosts:
+                - grafana.mogki.com
+              gateways:
+                - istio-system/public-gateway
+              http:
+                - match:
+                    - uri:
+                        prefix: /
+                  route:
+                    - destination:
+                        host: prometheus-stack-grafana.monitoring.svc.cluster.local
+                        port:
+                          number: 80
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
