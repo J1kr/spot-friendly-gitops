@@ -53,7 +53,7 @@ spec:
                         prefix: /
                   route:
                     - destination:
-                        host: prometheus-stack-grafana.monitoring.svc.cluster.local
+                        host: prometheus-stack-spot-grafana.monitoring.svc.cluster.local
                         port:
                           number: 80
   syncPolicy:
