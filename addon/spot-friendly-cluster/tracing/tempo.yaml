@@ -55,12 +55,6 @@ spec:
               wal:
                 path: /tmp/tempo/wal
 
-          serviceAccount:
-            create: true
-            name: tempo
-            annotations:
-              eks.amazonaws.com/role-arn: arn:aws:iam::105847046109:role/tempo-irsa
-
           multitenancyEnabled: false
           reportingEnabled: true
           retention: 24h
@@ -69,6 +63,12 @@ spec:
             enabled: true
             additionalLabels:
               release: prometheus-stack
+
+        serviceAccount:
+          create: true
+          name: tempo
+          annotations:
+            eks.amazonaws.com/role-arn: arn:aws:iam::105847046109:role/tempo-irsa              
   syncPolicy:
     automated:
       prune: true
