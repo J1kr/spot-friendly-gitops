@@ -13,10 +13,6 @@ spec:
     targetRevision: 1.25.2
     helm:
       values: |-
-        image:
-          auto: false
-          repository: docker.io/istio/proxyv2
-          tag: 1.25.0      
         name: istio-ingressgateway
         service:
           type: NodePort
@@ -32,6 +28,8 @@ spec:
               port: 443
               targetPort: 443
         kind: Deployment
+        nodeSelector:
+          elb-target: istio-gateway-node        
   destination:
     name: spot-friendly
     namespace: istio-system

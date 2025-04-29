@@ -31,6 +31,7 @@ spec:
                 alb.ingress.kubernetes.io/healthcheck-port: "30021"
                 alb.ingress.kubernetes.io/healthcheck-protocol: "HTTP"
                 alb.ingress.kubernetes.io/success-codes: "200"
+                alb.ingress.kubernetes.io/target-node-labels: "elb-target=istio-gateway-node"
             spec:
               ingressClassName: alb
               rules:
