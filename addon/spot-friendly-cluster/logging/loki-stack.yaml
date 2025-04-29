@@ -35,7 +35,7 @@ spec:
                     period: 24h
             storage_config:
               aws:
-                bucket: j1-lab-loki
+                bucketnames: j1-lab-loki
                 endpoint: s3.ap-northeast-2.amazonaws.com
                 region: ap-northeast-2
                 s3forcepathstyle: false              
