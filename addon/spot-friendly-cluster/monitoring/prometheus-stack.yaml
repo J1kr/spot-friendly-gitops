@@ -49,11 +49,12 @@ spec:
                       storage: 5Gi
             externalLabels:
               cluster: spot-friendly-cluster
-              thanos:
+            thanos:
               objectStorageConfig:
                 existingSecret:
                   name: thanos-objstore-secret
                   key: objstore.yaml
+
           thanosService:
             enabled: true
           service:
