@@ -49,18 +49,11 @@ spec:
                       storage: 5Gi
             externalLabels:
               cluster: spot-friendly-cluster
-            thanos:
+              thanos:
               objectStorageConfig:
-                config:
-                  type: S3
-                  config:
-                    bucket: j1-lab-thanos
-                    endpoint: s3.ap-northeast-2.amazonaws.com
-                    region: ap-northeast-2
-                    insecure: false
-                    signature_version2: false
-                    sse_config: {}
-                    http_config: {}
+                existingSecret:
+                  name: thanos-objstore-secret
+                  key: objstore.yaml
 
           service:
             type: ClusterIP
