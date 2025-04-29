@@ -38,8 +38,7 @@ spec:
                 bucket: j1-lab-loki
                 endpoint: s3.ap-northeast-2.amazonaws.com
                 region: ap-northeast-2
-                insecure: false
-                s3forcepathstyle: true
+                s3forcepathstyle: false              
               boltdb_shipper:
                 shared_store: s3
                 cache_ttl: 24h
