@@ -37,9 +37,14 @@ module "eks" {
       min_size     = 1
       max_size     = 1
 
-      instance_types = ["t3a.medium"]
-      capacity_type  = "ON_DEMAND"
+      instance_types = ["t3.xlarge"]
+      capacity_type  = "SPOT"
 
+      labels = {
+        node-role = "managed"
+        elb-target = "istio-gateway-node"
+      }
+      
       tags = {
         Name = "spot-friendly-bootstrap"
       }

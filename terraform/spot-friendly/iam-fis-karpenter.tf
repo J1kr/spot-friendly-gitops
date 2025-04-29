@@ -1,5 +1,5 @@
 resource "aws_iam_role" "fis_karpenter" {
-  name = "karpenter-fis"
+  name = "fis-karpenter"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
@@ -15,7 +15,7 @@ resource "aws_iam_role" "fis_karpenter" {
   })
 
   tags = {
-    Name = "karpenter-fis"
+    Name = "fis-karpenter"
     eks  = "fis"
   }
 }
@@ -49,7 +49,7 @@ data "aws_iam_policy_document" "fis_custom" {
 }
 
 resource "aws_iam_policy" "fis_custom" {
-  name   = "karpenter-fis-custom"
+  name   = "fis-karpenter-custom"
   policy = data.aws_iam_policy_document.fis_custom.json
 }
 

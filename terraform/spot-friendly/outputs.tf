@@ -23,3 +23,8 @@ output "karpenter_node_role_arn" {
   description = "ARN of the Karpenter EC2 node IAM role"
   value       = aws_iam_role.karpenter_node.arn
 }
+
+output "mogki_acm_certificate_arn" {
+  description = "ARN of the wildcard certificate for mogki.com"
+  value       = aws_acm_certificate.wildcard_mogki.arn
+}
