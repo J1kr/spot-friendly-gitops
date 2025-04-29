@@ -47,7 +47,7 @@ spec:
             create: true
             name: loki
             annotations:
-              eks.amazonaws.com/role-arn: arn:aws:iam::105847046109:role/loki-irsa
+              eks.amazonaws.com/role-arn: "arn:aws:iam::105847046109:role/loki-irsa"
 
         promtail:
           enabled: true
