@@ -2,7 +2,7 @@ resource "aws_iam_policy" "external_dns" {
   name        = "ExternalDNSPolicy"
   path        = "/"
   description = "IAM policy for External DNS"
-  policy      = file("${path.module}/iam/external-dns-policy.json")
+  policy      = file("${path.module}/policy/external-dns-policy.json")
 }
 
 module "external_dns_irsa" {

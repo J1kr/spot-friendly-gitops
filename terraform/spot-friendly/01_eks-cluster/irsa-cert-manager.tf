@@ -2,7 +2,7 @@ resource "aws_iam_policy" "cert_manager" {
   name        = "CertManagerPolicy"
   path        = "/"
   description = "IAM policy for Cert Manager"
-  policy      = file("${path.module}/iam/cert-manager-policy.json")
+  policy      = file("${path.module}/policy/cert-manager-policy.json")
 }
 
 module "cert_manager_irsa" {

@@ -2,7 +2,7 @@ resource "aws_iam_policy" "ebs_csi" {
   name        = "EBSCSIPolicy"
   path        = "/"
   description = "IAM policy for EBS CSI Driver"
-  policy      = file("${path.module}/iam/ebs-csi-policy.json")
+  policy      = file("${path.module}/policy/ebs-csi-policy.json")
 }
 
 module "ebs_csi_irsa" {

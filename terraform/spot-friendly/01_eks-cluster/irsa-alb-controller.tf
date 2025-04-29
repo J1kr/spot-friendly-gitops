@@ -2,7 +2,7 @@ resource "aws_iam_policy" "alb_controller" {
   name        = "AWSLoadBalancerControllerIAMPolicy"
   path        = "/"
   description = "IAM policy for ALB Controller"
-  policy      = file("${path.module}/iam/aws-load-balancer-controller-policy.json")
+  policy      = file("${path.module}/policy/aws-load-balancer-controller-policy.json")
 }
 
 module "alb_controller_irsa" {

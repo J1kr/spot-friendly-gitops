@@ -2,7 +2,7 @@ resource "aws_iam_policy" "karpenter_controller" {
   name        = "KarpenterControllerPolicy"
   path        = "/"
   description = "Comprehensive permissions for Karpenter controller"
-  policy      = file("${path.module}/iam/karpenter-policy.json")
+  policy      = file("${path.module}/policy/karpenter-policy.json")
 }
 
 module "karpenter_irsa" {
