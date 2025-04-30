@@ -38,12 +38,7 @@ spec:
           prometheusSpec:
             retention: 6h
             walCompression: true
-            enableAdminAPI: true
-            additionalArgs:
-              - name: "storage.tsdb.min-block-duration"
-                value: "2m"
-              - name: "storage.tsdb.max-block-duration"
-                value: "2m"          
+            enableAdminAPI: true     
             storageSpec:
               volumeClaimTemplate:
                 spec:
