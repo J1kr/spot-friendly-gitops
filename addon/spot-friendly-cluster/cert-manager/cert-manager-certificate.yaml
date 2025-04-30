@@ -22,7 +22,8 @@ spec:
             spec:
               acme:
                 email: mogki@naver.com
-                server: https://acme-v02.api.letsencrypt.org/directory
+                # server: https://acme-v02.api.letsencrypt.org/directory
+                server: https://acme-staging-v02.api.letsencrypt.org/directory # 테스트 반복으로 인증서 발급 제한(Rate Limit)에 걸려 임시로 staging 서버 사용
                 privateKeySecretRef:
                   name: letsencrypt-dns-irsa-key
                 solvers:
