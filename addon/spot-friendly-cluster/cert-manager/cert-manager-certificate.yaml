@@ -28,8 +28,8 @@ spec:
                   name: letsencrypt-dns-irsa-key
                 solvers:
                   - dns01:
-                      route53:
-                        region: ap-northeast-2
+                      route53: {}
+                        # region: ap-northeast-2 # 테스트 반복으로 인증서 발급 제한(Rate Limit)에 걸려 임시로 staging 서버 사용
                     
           - apiVersion: cert-manager.io/v1
             kind: Certificate
