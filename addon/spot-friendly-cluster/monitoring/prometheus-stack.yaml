@@ -39,6 +39,9 @@ spec:
             retention: 6h
             walCompression: true
             enableAdminAPI: true
+            additionalArgs:
+              - "--storage.tsdb.min-block-duration=2m"
+              - "--storage.tsdb.max-block-duration=2m"            
             storageSpec:
               volumeClaimTemplate:
                 spec:
