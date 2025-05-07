@@ -63,15 +63,15 @@ spec:
                       values: ["linux"]
                     - key: karpenter.k8s.aws/instance-category
                       operator: In
-                      values: ["t", "m"]
+                      values: ["c", "m"]
                     - key: karpenter.k8s.aws/instance-cpu
-                      operator: In
+                      operator: Gt
                       values: ["4"]
                     - key: "topology.kubernetes.io/zone"
                       operator: In
                       values: ["ap-northeast-2a", "ap-northeast-2c"]          
                     - key: karpenter.k8s.aws/instance-memory
-                      operator: In
+                      operator: Gt
                       values: ["16384"]
                     - key: karpenter.k8s.aws/instance-hypervisor
                       operator: In
