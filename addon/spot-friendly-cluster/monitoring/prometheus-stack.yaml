@@ -71,6 +71,39 @@ spec:
                         
         grafana:
           enabled: true
+          datasources:
+            datasources.yaml:
+              apiVersion: 1
+              datasources:
+                - name: Prometheus
+                  type: prometheus
+                  access: proxy
+                  url: http://prometheus-prometheus.monitoring.svc:9090
+                  isDefault: true
+
+                - name: Loki
+                  type: loki
+                  access: proxy
+                  url: http://loki-spot.logging.svc:3100
+                  jsonData:
+                    maxLines: 1000
+
+                - name: Tempo
+                  type: tempo
+                  access: proxy
+                  url: http://tempo-spot.tracing.svc:3100
+                  jsonData:
+                    tracesToLogsV2:
+                      datasourceUid: 'loki'
+                      tags: ['job', 'instance']
+                      mappedTags:
+                        - key: 'traceID'
+                          value: 'trace.id'
+                      mapTagNamesEnabled: true
+                      spanStartTimeShift: '-5m'
+                      spanEndTimeShift: '5m'
+                      filterByTraceID: true
+                      filterBySpanID: false          
           service:
             type: ClusterIP
             port: 80
@@ -80,7 +113,7 @@ spec:
             dashboards:
               enabled: true
             datasources:
-              enabled: true
+              enabled: false
       skipCrds: false   
   syncPolicy:
     automated:
