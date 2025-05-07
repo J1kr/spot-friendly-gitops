@@ -71,9 +71,6 @@ spec:
                         
         grafana:
           enabled: true
-          grafana.ini:
-            live:
-              enabled: false
           datasources:
             datasources.yaml:
               apiVersion: 1
