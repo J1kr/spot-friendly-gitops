@@ -9,10 +9,7 @@
           "s3:DeleteObject",
           "s3:ListBucket"
         ],
-        "Resource": [
-          "arn:aws:s3:::j1-lab-loki",
-          "arn:aws:s3:::j1-lab-loki/*"
-        ]
+        "Resource": "*"
       }
     ]
   }
