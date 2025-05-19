@@ -71,8 +71,8 @@ spec:
                       operator: In
                       values: ["ap-northeast-2a", "ap-northeast-2c"]          
                     - key: karpenter.k8s.aws/instance-memory
-                      operator: Gte
-                      values: ["8192"]
+                      operator: Gt
+                      values: ["8191"]
                     - key: karpenter.k8s.aws/instance-hypervisor
                       operator: In
                       values: ["nitro"]
