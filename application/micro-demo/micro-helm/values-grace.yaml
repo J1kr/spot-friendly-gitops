@@ -3,8 +3,9 @@ frontend:
   replicaCount: 2
   image:
     repository: dmogki/frontend
-    tag: v0.1.0
-  nodeSelector: {}
+    tag: v0.1.1
+  nodeSelector:
+    node-role: spot
   affinity: {}
   tolerations: []
   topologySpreadConstraints: []
@@ -18,7 +19,8 @@ adservice:
   image:
     repository: us-central1-docker.pkg.dev/google-samples/microservices-demo/adservice
     tag: v0.10.2
-  nodeSelector: {}
+  nodeSelector:
+    node-role: spot
   affinity: {}
   tolerations: []
   topologySpreadConstraints: []
@@ -31,8 +33,9 @@ checkoutservice:
   replicaCount: 2
   image:
     repository: dmogki/checkoutservice
-    tag: v0.1.0
-  nodeSelector: {}
+    tag: v0.1.1
+  nodeSelector:
+    node-role: spot
   affinity: {}
   tolerations: []
   topologySpreadConstraints: []  
@@ -46,7 +49,8 @@ emailservice:
   image:
     repository: dmogki/emailservice
     tag: v0.1.1
-  nodeSelector: {}
+  nodeSelector:
+    node-role: spot
   affinity: {}
   tolerations: []
   topologySpreadConstraints: []
@@ -60,7 +64,8 @@ paymentservice:
   image:
     repository: dmogki/paymentservice
     tag: v0.1.0
-  nodeSelector: {}
+  nodeSelector:
+    node-role: spot
   affinity: {}
   tolerations: []
   topologySpreadConstraints: []
@@ -74,7 +79,8 @@ recommendationservice:
     repository: dmogki/recommendationservice
     tag: v0.1.1
   replicaCount: 2
-  nodeSelector: {}
+  nodeSelector:
+    node-role: spot
   affinity: {}
   tolerations: []
   topologySpreadConstraints: []  
@@ -89,7 +95,8 @@ cartservice:
   image:
     repository: us-central1-docker.pkg.dev/google-samples/microservices-demo/cartservice
     tag: v0.10.2
-  nodeSelector: {}
+  nodeSelector:
+    node-role: spot
   affinity: {}
   tolerations: []
   topologySpreadConstraints: []  
@@ -103,7 +110,8 @@ currencyservice:
   image:
     repository: dmogki/currencyservice
     tag: v0.1.0
-  nodeSelector: {}
+  nodeSelector:
+    node-role: spot
   affinity: {}
   tolerations: []
   topologySpreadConstraints: []  
@@ -117,7 +125,8 @@ productcatalogservice:
   image:
     repository: dmogki/productcatalogservice
     tag: v0.1.0
-  nodeSelector: {}
+  nodeSelector:
+    node-role: spot
   affinity: {}
   tolerations: []
   topologySpreadConstraints: []  
@@ -131,7 +140,8 @@ shippingservice:
   image:
     repository: dmogki/shippingservice
     tag: v0.1.0
-  nodeSelector: {}
+  nodeSelector:
+    node-role: spot
   affinity: {}
   tolerations: []
   topologySpreadConstraints: []  
@@ -144,10 +154,10 @@ loadgenerator:
   image:
     repository: us-central1-docker.pkg.dev/google-samples/microservices-demo/loadgenerator
     tag: v0.10.2
-  replicaCount: 1
+  replicaCount: 0
   env:
-    users: "100"
-    rate: "10"
+    users: "2000"
+    rate: "100"
   resources:
     requests:
       cpu: 300m
@@ -155,7 +165,8 @@ loadgenerator:
     limits:
       cpu: 500m
       memory: 512Mi
-  nodeSelector: {}
+  nodeSelector:
+    node-role: managed
   affinity: {}
   tolerations: []
   topologySpreadConstraints: []  

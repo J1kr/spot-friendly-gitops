@@ -144,7 +144,7 @@ loadgenerator:
   image:
     repository: us-central1-docker.pkg.dev/google-samples/microservices-demo/loadgenerator
     tag: v0.10.2
-  replicaCount: 1
+  replicaCount: 0
   env:
     users: "100"
     rate: "10"

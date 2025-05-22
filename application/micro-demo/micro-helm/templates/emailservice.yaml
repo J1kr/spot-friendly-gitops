@@ -85,4 +85,16 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: emailservice
+{{- if .Values.emailservice.pdb.enabled }}
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: emailservice-pdb
+spec:
+  minAvailable: {{ .Values.emailservice.pdb.minAvailable }}
+  selector:
+    matchLabels:
+      app: emailservice
+{{- end }}
 {{- end }}

@@ -12,7 +12,7 @@ resource "aws_fis_experiment_template" "karpenter_spot_interrupt" {
     selection_mode = "COUNT(1)"
 
     resource_tag {
-      key   = "karpenter.sh/provisioner-name"
+      key   = "karpenter.sh/nodepool"
       value = "spot"
     }
   }

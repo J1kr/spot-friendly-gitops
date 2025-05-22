@@ -1,5 +1,4 @@
 {{- if .Values.shippingservice.enabled }}
-
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -95,4 +94,16 @@ kind: ServiceAccount
 metadata:
   name: shippingservice
 
+{{- if .Values.shippingservice.pdb.enabled }}
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: shippingservice-pdb
+spec:
+  minAvailable: {{ .Values.shippingservice.pdb.minAvailable }}
+  selector:
+    matchLabels:
+      app: shippingservice
+{{- end }}
 {{- end }}

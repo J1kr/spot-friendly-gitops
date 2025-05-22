@@ -1,5 +1,4 @@
 {{- if .Values.currencyservice.enabled }}
-
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -68,11 +67,11 @@ spec:
               port: 7000
           resources:
             requests:
-              cpu: 100m
-              memory: 64Mi
-            limits:
               cpu: 200m
               memory: 128Mi
+            limits:
+              cpu: 400m
+              memory: 256Mi
 ---
 apiVersion: v1
 kind: Service
@@ -93,5 +92,16 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: currencyservice
-
+{{- if .Values.currencyservice.pdb.enabled }}
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: currencyservice-pdb
+spec:
+  minAvailable: {{ .Values.currencyservice.pdb.minAvailable }}
+  selector:
+    matchLabels:
+      app: currencyservice
+{{- end }}
 {{- end }}

@@ -83,4 +83,16 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: paymentservice
+{{- if .Values.paymentservice.pdb.enabled }}
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: paymentservice-pdb
+spec:
+  minAvailable: {{ .Values.paymentservice.pdb.minAvailable }}
+  selector:
+    matchLabels:
+      app: paymentservice
+{{- end }}
 {{- end }}

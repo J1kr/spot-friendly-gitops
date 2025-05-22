@@ -41,7 +41,7 @@ spec:
   hosts:
     - {{ .Values.istio.host | quote }}
   gateways:
-    - istio-system/gateway
+    - istio-system/public-gateway
   http:
     - route:
         - destination:
