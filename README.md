@@ -70,5 +70,5 @@
 ## 관련 문서
 
 이 프로젝트에 대한 더 자세한 내용은 다음 문서를 참조하세요:
-- [포트폴리오 PDF](.docs/prorfolio.pdf): 아키텍처 개요 및 프로젝트 설명
+- [포트폴리오 PDF](https://naver.me/GSc2lV36)
 - [Notion 상세 문서](https://jongone.notion.site/Spot-Friendly-Architecture-1eeed8530d818053b1e8c08b75ed04ca?pvs=74)
