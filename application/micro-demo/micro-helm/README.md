@@ -69,19 +69,19 @@ frontend:
     enabled: true
     minAvailable: 1
 ```  
-	•	replicaCount: 각 서비스 복제본 수
-	•	nodeSelector/affinity: Spot 인스턴스 및 분산 배치 정책
-	•	pdb: PodDisruptionBudget(최소 가용성 보장)
+- replicaCount: 각 서비스 복제본 수
+- nodeSelector/affinity: Spot 인스턴스 및 분산 배치 정책
+- pdb: PodDisruptionBudget(최소 가용성 보장)  
 
 모든 서비스의 상세 파라미터/구성은 values-spot.yaml을 참고하세요.
 
 ## 🧪 테스트/실험 스크립트
-	-	locustfile.py
+-	locustfile.py
     - Locust 기반 부하 테스트 (상품 탐색, 장바구니, 결제 등 시나리오 자동화)
-	-	run-load-and-rollout.sh
-	  -	5분간 Locust로 부하 생성 + 30초마다 rollout restart
-	  -	GS 적용/미적용 상태 실험 자동화
-	-	fis-loop-test.sh
+-	run-load-and-rollout.sh
+    -	5분간 Locust로 부하 생성 + 30초마다 rollout restart
+    -	Graceful Shotdown 적용/미적용 상태 실험
+-	fis-loop-test.sh
     - AWS FIS로 Spot Interrupt를 1분마다 발생시켜 실제 장애/복구 시나리오 재현
 
 ⚡ Helm 배포/실행 예시
@@ -92,7 +92,7 @@ frontend:
 ## ArgoCD Application으로 GitOps 연동 
 `argoApps/micro-demo.yaml`
 
-📝 참고
-	•	원본: Google Online Boutique  
-	•	본 차트는 Spot 환경 실험 및 장애내성 시나리오 최적화를 위해 리팩토링됨  
-	•	테스트 및 배포 시 실제 트래픽/비용이 발생할 수 있으니 환경 구성에 유의  
+📝 참고  
+- 원본: Google Online Boutique  
+- 본 차트는 Spot 환경 실험 및 장애내성 시나리오 최적화를 위해 리팩토링됨  
+- 테스트 및 배포 시 실제 트래픽/비용이 발생할 수 있으니 환경 구성에 유의  
