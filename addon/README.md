@@ -1,10 +1,18 @@
 
 # 📦 addon
 
-이 디렉터리는 **Kubernetes 클러스터의 주요 Addon(애드온) 설치를 위한 ArgoCD Application 리소스 정의**를 모아놓은 공간입니다.  
-애드온은 **Helm Chart 기반**으로 외부 공식 Helm Chart Repository를 참조하여, **ArgoCD를 통해 관리**합니다.
+> 이 디렉터리는 **ArgoCD App of Apps 패턴**을 활용하여 Kubernetes 클러스터의 주요 Addon(애드온) 설치를 일괄 관리하는 리소스 정의 공간입니다.  
+> 최상위 Root Application(예: `argoApps/spot-addon.yaml`)이 하위 디렉터리 내 모든 Addon Application을 자동 동기화합니다.
 
----
+
+## App of Apps 패턴 개요
+
+- **Root Application**:  
+  - 각 클러스터별로 `argoApps/{cluster}-addon.yaml` 파일을 생성하여 모든 Addon(Application)을 일괄 등록/관리
+  - `directory.recurse: true` 옵션으로 하위 Application 디렉터리 내 모든 리소스를 자동 동기화
+  - 예시:
+    - `argoApps/spot-addon.yaml` : Spot 인스턴스 클러스터 Addon 일괄 관리
+    - `argoApps/mgmt-addon.yaml` : 관리 클러스터 Addon 일괄 관리
 
 ## 📁 디렉터리 구조
 ```
