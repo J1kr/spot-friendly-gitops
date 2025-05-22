@@ -40,16 +40,16 @@
 - Spot 인스턴스 클러스터(spot-friendly-cluster): 테스트 애플리케이션이 배포되는 환경
 
 **2. 핵심 기술:**
-- Karpenter: Spot 인스턴스 관리 및 노드 프로비저닝
-- ArgoCD: GitOps 기반 애플리케이션 배포 자동화
+- Karpenter,Node Termination handler: Spot 인스턴스 관리 및 노드 프로비저닝
+- ArgoCD: GitOps 기반 애플리케이션 배포 
 - Istio: 서비스 메시 및 트래픽 관리
-- Terraform: 클라우드 인프라 코드화(IaC)
+- Terraform: 클라우드 인프라 프로비저닝
 
-**3. 관측성 도구:**
-- 로깅: Loki, Promtail
-- 모니터링: Prometheus,Thanos 
-- 트레이싱: Tempo
-- 대시보드: Grafana
+**3. Observability:**
+- logging: Loki, Promtail
+- metrics: Prometheus,Thanos 
+- tracing: Tempo
+- dashboard : Grafana
 
 ## 시작하기
 
@@ -70,5 +70,5 @@
 ## 관련 문서
 
 이 프로젝트에 대한 더 자세한 내용은 다음 문서를 참조하세요:
-- [포트폴리오 PDF](링크): 아키텍처 개요 및 프로젝트 설명
-- [Notion 상세 문서](https://jongone.notion.site/Spot-Friendly-Architecture-1eeed8530d818053b1e8c08b75ed04ca?pvs=74): 구현 세부 사항 및 기술적 의사 결정
+- [포트폴리오 PDF](.docs/prorfolio.pdf): 아키텍처 개요 및 프로젝트 설명
+- [Notion 상세 문서](https://jongone.notion.site/Spot-Friendly-Architecture-1eeed8530d818053b1e8c08b75ed04ca?pvs=74)
