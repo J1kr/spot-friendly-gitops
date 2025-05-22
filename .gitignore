@@ -39,3 +39,7 @@ Thumbs.db
 .env
 .env.*
 *.iml
+
+__pycache__/
+*.pyc
+*.pyo
