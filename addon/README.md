@@ -4,7 +4,6 @@
 > 이 디렉터리는 **ArgoCD App of Apps 패턴**을 활용하여 Kubernetes 클러스터의 주요 Addon(애드온) 설치를 일괄 관리하는 리소스 정의 공간입니다.  
 > 최상위 Root Application(예: `argoApps/spot-addon.yaml`)이 하위 디렉터리 내 모든 Addon Application을 자동 동기화합니다.
 
-
 ## App of Apps 패턴 개요
 
 - **Root Application**:  
@@ -38,8 +37,6 @@ kind: Application
 metadata:
   name: alb-controller-spot
   namespace: argocd
-  annotations:
-    argocd.argoproj.io/sync-wave: "0"
 spec:
   project: default
   source:
