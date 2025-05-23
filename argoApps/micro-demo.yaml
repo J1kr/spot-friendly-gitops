@@ -11,7 +11,11 @@ spec:
   source:
     repoURL: https://github.com/J1kr/spot-friendly-gitops
     targetRevision: HEAD
-    path: application/micro-demo/base
+    path: application/micro-demo/micro-helm
+    helm:
+      releaseName: micro-demo
+      valueFiles:
+        - values-spot.yaml
   syncPolicy:
     automated:
       selfHeal: true
