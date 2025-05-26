@@ -70,5 +70,5 @@
 ## 관련 문서
 
 이 프로젝트에 대한 더 자세한 내용은 다음 문서를 참조하세요:
-- [포트폴리오 PDF](https://drive.google.com/file/d/1v5JAUkWnhGLM7BWGI37xaM-z8ypLd_GR/view?usp=sharing)
+- [포트폴리오 PDF](https://drive.google.com/file/d/1K1Hwhcgs2Xzy9ImweJGmnp4OaLJjKv2_/view?usp=drive_link)
 - [Notion 상세 문서](https://jongone.notion.site/Spot-Friendly-Architecture-1eeed8530d818053b1e8c08b75ed04ca?pvs=74)
